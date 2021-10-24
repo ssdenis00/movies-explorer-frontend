@@ -10,6 +10,10 @@
   padding: 70px 0;
 }
 
+.authentication {
+  justify-content: stretch;
+}
+
 .authentication__title {
   margin: 40px 0 0;
   font-weight: 500;
@@ -25,6 +29,12 @@
   flex-direction: column;
   justify-content: space-between;
 }
+
+.authentication__form_type_register {
+  height: auto;
+  justify-content: stretch;
+}
+
 .authentication__inputs {
   display: flex;
   flex-direction: column;
@@ -34,7 +44,13 @@
   line-height: 12px;
   color: #8b8b8b;
   margin-bottom: 1px;
+  margin: 24px 0 0;
 }
+
+.authentication__label:first-of-type {
+  margin: 0;
+}
+
 .authentication__input {
   font-weight: 500;
   font-size: 14px;
@@ -47,6 +63,7 @@
 }
 
 .authentication__btn {
+  margin: 50px 0 0;
   display: block;
   width: 100%;
   padding: 13px 0 15px;
@@ -58,6 +75,7 @@
   line-height: 17px;
   color: #fff;
 }
+
 .authentication__helper {
   margin: 15px 0 0;
   display: flex;

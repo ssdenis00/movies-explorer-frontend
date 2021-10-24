@@ -1,5 +1,4 @@
 import Authentication from "../Authentication/Authentication";
-import "./Login.css";
 
 function Login() {
   return (
