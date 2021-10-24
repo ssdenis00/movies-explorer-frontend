@@ -1,0 +1,40 @@
+.promo {
+  display: flex;
+  background: #073042;
+  color: #fff;
+  padding-top: 70px;
+  padding-bottom: 75px;
+}
+
+.promo__title {
+  margin: 0;
+  font-weight: normal;
+  font-size: 50px;
+  line-height: 58px;
+}
+
+.promo__subtitle {
+  mix-blend-mode: normal;
+  opacity: 0.5;
+  font-size: 13px;
+  line-height: 16px;
+}
+
+.promo__link {
+  display: inline-block;
+  margin: 145px 0 0;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 3px;
+  color: inherit;
+  padding: 10px 20px;
+  box-sizing: border-box;
+}
+
+.promo__image {
+  display: block;
+  width: 310px;
+  height: 304px;
+  object-fit: cover;
+  object-position: center;
+}

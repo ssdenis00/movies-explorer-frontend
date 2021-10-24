@@ -1,10 +1,10 @@
 import "./Main.css";
-import Lead from "../Lead/Lead";
+import Promo from "../Promo/Promo";
 
 function Main() {
   return (
     <main className="main">
-      <Lead />
+      <Promo />
     </main>
   );
 }

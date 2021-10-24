@@ -9,39 +9,3 @@
 .header_type_landing {
   background: #073042;
 }
-
-.header__link {
-  color: #fff;
-  text-decoration: none;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 16px;
-}
-
-.header__navigation {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 30px;
-}
-
-.header__link_type_btn {
-  box-sizing: border-box;
-  padding: 8px 20px;
-  background: #3ddc84;
-  border-radius: 3px;
-}
-
-.header__movies {
-  gap: 16px;
-}
-
-.header__user {
-  gap: 7px;
-}
-
-.header__avatar {
-  display: block;
-  width: 26px;
-  height: 26px;
-}
