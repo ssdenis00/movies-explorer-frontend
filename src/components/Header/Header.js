@@ -5,7 +5,7 @@ import userAvatar from "../../images/user-avatar.svg";
 
 function Header() {
   return (
-    <header className="header">
+    <header className="header header_type_landing app__padding">
       <Logo />
       <Switch>
         <Route exact path="/">

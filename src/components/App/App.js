@@ -1,14 +1,14 @@
 import "./App.css";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
-import Register from "../Register/Register";
+import Main from "../Main/Main";
 
 function App() {
   return (
     <div className="app">
-      {/* <Header />
-      <Footer /> */}
-      <Register />
+      <Header />
+      <Main />
+      <Footer />
     </div>
   );
 }

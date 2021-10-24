@@ -2,7 +2,7 @@ import "./Footer.css";
 
 function Footer() {
   return (
-    <footer className="footer">
+    <footer className="footer app__padding">
       <h4 className="footer__title">
         Учебный проект Яндекс.Практикум х BeatFilm.
       </h4>

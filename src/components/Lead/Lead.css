@@ -1,0 +1,38 @@
+.lead {
+  display: flex;
+  background: #073042;
+  color: #fff;
+  padding-top: 70px;
+  padding-bottom: 75px;
+}
+
+.lead__info {
+}
+
+.lead__title {
+  margin: 0;
+  font-weight: normal;
+  font-size: 50px;
+  line-height: 58px;
+}
+
+.lead__subtitle {
+  mix-blend-mode: normal;
+  opacity: 0.5;
+  font-size: 13px;
+  line-height: 16px;
+}
+
+.lead__link {
+  display: inline-block;
+  margin: 145px 0 0;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 3px;
+  color: inherit;
+  padding: 10px 20px;
+  box-sizing: border-box;
+}
+
+.lead__image {
+}
