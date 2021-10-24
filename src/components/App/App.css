@@ -14,3 +14,19 @@
   padding: 0 70px;
   box-sizing: border-box;
 }
+
+.section {
+  padding: 110px 70px;
+}
+
+.section__title {
+  display: block;
+  color: #fff;
+  margin: 0;
+  padding: 0 0 23px;
+  border-bottom: 1px solid #dadada;
+  font-weight: normal;
+  font-size: 22px;
+  line-height: 27px;
+  letter-spacing: -0.04em;
+}
