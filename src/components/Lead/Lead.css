@@ -6,9 +6,6 @@
   padding-bottom: 75px;
 }
 
-.lead__info {
-}
-
 .lead__title {
   margin: 0;
   font-weight: normal;
@@ -35,4 +32,9 @@
 }
 
 .lead__image {
+  display: block;
+  width: 310px;
+  height: 304px;
+  object-fit: cover;
+  object-position: center;
 }
