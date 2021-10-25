@@ -19,7 +19,7 @@ function Navigation() {
         </nav>
       </Route>
       <Route path="*">
-        <nav className="navigation__navigation navigation__movies">
+        <nav className="navigation navigation_type_movies">
           <Link to="/movies" className="navigation__link">
             Фильмы
           </Link>
@@ -27,7 +27,7 @@ function Navigation() {
             Сохраненные фильмы
           </Link>
         </nav>
-        <nav className="navigation__navigation navigation__user">
+        <nav className="navigation navigation_type_user">
           <Link to="/profile" className="navigation__link">
             Аккаунт
           </Link>

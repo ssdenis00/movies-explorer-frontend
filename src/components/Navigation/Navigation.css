@@ -5,6 +5,14 @@
   gap: 30px;
 }
 
+.navigation_type_movies {
+  gap: 16px;
+}
+
+.navigation_type_user {
+  gap: 7px;
+}
+
 .navigation__link {
   color: #fff;
   text-decoration: none;
@@ -18,14 +26,6 @@
   padding: 8px 20px;
   background: #3ddc84;
   border-radius: 3px;
-}
-
-.navigation__movies {
-  gap: 16px;
-}
-
-.navigation__user {
-  gap: 7px;
 }
 
 .navigation__avatar {
