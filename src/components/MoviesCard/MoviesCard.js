@@ -1,6 +1,6 @@
 import "./MoviesCard.css";
 
-function MoviesCard({ film }) {
+function MoviesCard({ film, type }) {
   return (
     <li className="movie">
       <div className="movie__info">
@@ -8,7 +8,11 @@ function MoviesCard({ film }) {
         <p className="movie__duration">{film.duration}</p>
         <button
           type="button"
-          className="movie__like-btn"
+          className={`${
+            type === "all"
+              ? "movie__like-btn_type_all"
+              : "movie__like-btn_type_saved"
+          } movie__like-btn`}
           aria-label="добавить в избранное"
         ></button>
       </div>

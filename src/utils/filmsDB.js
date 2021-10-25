@@ -6,7 +6,7 @@ import poster5 from "../images/book-poster.png";
 import poster6 from "../images/germany-poster.png";
 import poster7 from "../images/run-poster.png";
 
-export const data = [
+export const films = [
   {
     title: "33 слова о дизайне",
     duration: "1ч 42м",
@@ -48,5 +48,26 @@ export const data = [
     duration: "1ч 42м",
     poster: poster7,
     id: "7",
+  },
+];
+
+export const savedFilms = [
+  {
+    title: "33 слова о дизайне",
+    duration: "1ч 42м",
+    poster: poster1,
+    id: "1",
+  },
+  {
+    title: "Киноальманах «100 лет дизайна»",
+    duration: "1ч 42м",
+    poster: poster2,
+    id: "2",
+  },
+  {
+    title: "В погоне за Бенкси",
+    duration: "1ч 42м",
+    poster: poster4,
+    id: "4",
   },
 ];

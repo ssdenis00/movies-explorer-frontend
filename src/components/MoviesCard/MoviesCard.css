@@ -37,7 +37,15 @@
   padding: 0;
   width: 14px;
   height: 12px;
+}
+
+.movie__like-btn_type_all {
   background: center / contain url("../../images/like.svg") no-repeat;
+}
+
+.movie__like-btn_type_saved {
+  background: center / contain url("../../images/delete-favorite-icon.svg")
+    no-repeat;
 }
 
 .movie__like-btn_active {

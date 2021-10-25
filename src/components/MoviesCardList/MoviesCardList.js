@@ -1,18 +1,14 @@
 import MoviesCard from "../MoviesCard/MoviesCard";
 import "./MoviesCardList.css";
-import { data } from "../../utils/filmsDB";
 
-function MoviesCardList() {
+function MoviesCardList({ films, type }) {
   return (
     <section className="movies section">
       <ul className="movies__list">
-        {data.map((film) => {
-          return <MoviesCard key={film.id} film={film} />;
+        {films.map((film) => {
+          return <MoviesCard key={film.id} film={film} type={type} />;
         })}
       </ul>
-      <button type="button" className="movies__btn">
-        Ещё
-      </button>
     </section>
   );
 }
