@@ -14,6 +14,7 @@
 }
 
 .about-project__cell-title {
+  margin: 0;
   font-weight: normal;
   font-size: 20px;
   line-height: 24px;
@@ -62,4 +63,20 @@
 
 .about-project__graph-title_type_frontend {
   background: #303030;
+}
+
+@media (max-width: 425px) {
+  .about-project__table {
+    flex-direction: column;
+    margin-top: 60px;
+    gap: 56px;
+  }
+
+  .about-project__cell-text {
+    margin-top: 16px;
+  }
+
+  .about-project__graph {
+    margin-top: 60px;
+  }
 }

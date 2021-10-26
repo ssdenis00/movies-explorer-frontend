@@ -35,6 +35,8 @@
   width: 100%;
   justify-content: space-between;
   align-items: center;
+  font-size: 30px;
+  line-height: 50px;
 }
 
 .portfolio__link::after {
@@ -43,4 +45,27 @@
   width: 30px;
   height: 30px;
   background: center / contain url("../../images/portfolio-arrow.svg") no-repeat;
+}
+
+@media (max-width: 768px) {
+  .portfolio__link {
+    font-size: 28px;
+  }
+
+  .portfolio__link::after {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+@media (max-width: 425px) {
+  .portfolio__link {
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  .portfolio__link::after {
+    width: 18px;
+    height: 18px;
+  }
 }

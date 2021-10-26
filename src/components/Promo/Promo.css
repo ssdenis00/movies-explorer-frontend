@@ -29,6 +29,9 @@
   color: inherit;
   padding: 10px 20px;
   box-sizing: border-box;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
 }
 
 .promo__image {
@@ -37,4 +40,51 @@
   height: 304px;
   object-fit: cover;
   object-position: center;
+}
+
+@media (max-width: 768px) {
+  .promo {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+
+  .promo__title {
+    text-align: center;
+    margin: 48px 0 0;
+    font-size: 40px;
+    line-height: 50px;
+  }
+
+  .promo__subtitle {
+    text-align: center;
+    margin: 22px 0 0;
+  }
+
+  .promo__link {
+    margin: 92px auto 0;
+  }
+
+  .promo__info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 425px) {
+  .promo__image {
+    width: 210px;
+    height: 206px;
+  }
+
+  .promo__title {
+    font-size: 30px;
+    line-height: 38px;
+    letter-spacing: -0.04em;
+    margin-top: 44px;
+  }
+
+  .promo__subtitle {
+    margin-top: 24px;
+  }
 }
