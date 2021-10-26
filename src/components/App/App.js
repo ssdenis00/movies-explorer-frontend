@@ -6,6 +6,7 @@ import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies";
 import Profile from "../Profile/Profile";
 import Login from "../Login/Login";
+import Preloader from "../Preloader/Preloader";
 
 function App() {
   return (
@@ -13,7 +14,8 @@ function App() {
       <Header />
       {/* <Main /> */}
       {/* <SavedMovies /> */}
-      <Profile />
+      {/* <Profile /> */}
+      <Preloader />
       {/* <Login /> */}
       {/* <Footer /> */}
     </div>
