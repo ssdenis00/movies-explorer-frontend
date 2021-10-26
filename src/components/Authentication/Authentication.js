@@ -18,7 +18,7 @@ function Authentication({
       } `}
     >
       <div className="authentication__header">
-        <Logo />
+        <Logo modifier="logo_place_authentication" />
         <h1 className="authentication__title">{title}</h1>
       </div>
 

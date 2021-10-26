@@ -39,6 +39,10 @@
   .section {
     padding: 90px 50px;
   }
+
+  .app__padding {
+    padding: 0 30px;
+  }
 }
 
 @media (max-width: 425px) {
@@ -49,5 +53,9 @@
   .section__title {
     font-size: 14px;
     padding-bottom: 28px;
+  }
+
+  .app__padding {
+    padding: 0 10px;
   }
 }

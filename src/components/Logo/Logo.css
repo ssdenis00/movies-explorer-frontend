@@ -6,7 +6,7 @@
 }
 
 @media (max-width: 425px) {
-  .logo {
+  .logo_place_authentication {
     margin: 0 auto;
   }
 }
