@@ -111,3 +111,13 @@
   line-height: 17px;
   color: #4285f4;
 }
+
+@media (max-width: 768px) {
+  .authentication {
+    padding: 232px 0;
+  }
+  .authentication__form_type_register {
+    height: 100%;
+    justify-content: space-between;
+  }
+}
