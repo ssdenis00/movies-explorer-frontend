@@ -31,7 +31,9 @@ function App() {
         state={modalState}
         closeModal={closeModal}
       >
-        <label htmlFor="modal-name" className="modal__label"></label>
+        <label htmlFor="modal-name" className="modal__label">
+          Имя
+        </label>
         <input
           placeholder="Имя"
           type="text"
@@ -39,6 +41,7 @@ function App() {
           id="modal-name"
           required
         />
+        <span className="modal__err"></span>
       </Modal>
 
       <Switch>
