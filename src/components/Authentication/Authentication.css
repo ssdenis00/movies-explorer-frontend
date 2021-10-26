@@ -62,6 +62,22 @@
   padding: 10px 0;
 }
 
+.authentication__input_state_error {
+  color: #ee3465;
+}
+
+.authentication__err {
+  display: none;
+  font-size: 10px;
+  line-height: 12px;
+  color: #ee3465;
+  margin: 7px 0 0;
+}
+
+.authentication__err_active {
+  display: block;
+}
+
 .authentication__btn {
   margin: 50px 0 0;
   display: block;

@@ -15,8 +15,8 @@ function App() {
       {/* <Main /> */}
       {/* <SavedMovies /> */}
       {/* <Profile /> */}
-      <Preloader />
-      {/* <Login /> */}
+      {/* <Preloader /> */}
+      <Login />
       {/* <Footer /> */}
     </div>
   );
