@@ -4,3 +4,9 @@
   height: 38px;
   background: center / contain url("../../images/header-logo.svg") no-repeat;
 }
+
+@media (max-width: 425px) {
+  .logo {
+    margin: 0 auto;
+  }
+}
