@@ -1,3 +1,4 @@
+import { Route, Switch } from "react-router";
 import { useState } from "react";
 import "./App.css";
 import Header from "../Header/Header";
@@ -9,11 +10,10 @@ import Profile from "../Profile/Profile";
 import Login from "../Login/Login";
 import Register from "../Register/Register";
 import Modal from "../Modal/Modal";
-import { Route, Switch } from "react-router";
+import NoFoundPage from "../NoFoundPage/NoFoundPage";
 
 function App() {
   const [modalState, setModalState] = useState(false);
-  const [isLogin, setIsLogin] = useState(false);
 
   function openModal() {
     setModalState(true);
@@ -25,8 +25,6 @@ function App() {
 
   return (
     <div className="app">
-      <Header isLogin={isLogin} />
-
       <Modal
         title="Редактировать профиль"
         btnName="Сохранить"
@@ -45,15 +43,22 @@ function App() {
 
       <Switch>
         <Route exact path="/">
+          <Header isLogin={false} />
           <Main />
+          <Footer />
         </Route>
         <Route path="/movies">
+          <Header isLogin={true} />
           <Movies />
+          <Footer />
         </Route>
         <Route path="/saved-movies">
+          <Header isLogin={true} />
           <SavedMovies />
+          <Footer />
         </Route>
         <Route path="/profile">
+          <Header isLogin={true} />
           <Profile openModal={openModal} />
         </Route>
         <Route path="/signin">
@@ -62,9 +67,10 @@ function App() {
         <Route path="/signup">
           <Register />
         </Route>
+        <Route path="*">
+          <NoFoundPage />
+        </Route>
       </Switch>
-
-      <Footer />
     </div>
   );
 }
