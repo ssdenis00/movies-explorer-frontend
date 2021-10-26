@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import "./Profile.css";
 
-function Profile() {
+function Profile({ openModal }) {
   return (
     <main className="main">
       <section className="profile section">
@@ -17,9 +17,9 @@ function Profile() {
           </li>
         </ul>
         <div className="profile__links">
-          <Link to="/" className="profile__link">
+          <button onClick={openModal} type="button" className="profile__link">
             Редактировать
-          </Link>
+          </button>
           <Link to="/" className="profile__link profile__link_type_exit">
             Выйти из аккаунта
           </Link>

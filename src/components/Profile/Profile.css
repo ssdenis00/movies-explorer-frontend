@@ -61,6 +61,10 @@
   color: inherit;
   font-size: 13px;
   line-height: 16px;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
 }
 
 .profile__link_type_exit {

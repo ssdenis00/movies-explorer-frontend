@@ -31,7 +31,7 @@ function Login() {
         id="login-password"
         required
       />
-      <span className="authentication__err">Что то пошло не так</span>
+      <span className="authentication__err"></span>
     </Authentication>
   );
 }
