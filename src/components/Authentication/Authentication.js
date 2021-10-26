@@ -2,9 +2,21 @@ import { Link } from "react-router-dom";
 import Logo from "../Logo/Logo";
 import "./Authentication.css";
 
-function Authentication({ title, children, btnName, helperText, helperLink }) {
+function Authentication({
+  title,
+  children,
+  btnName,
+  helperText,
+  helperLink,
+  helperLinkTo,
+  type,
+}) {
   return (
-    <section className="authentication authentication_type_register">
+    <section
+      className={`authentication ${
+        type === "register" ? "authentication_type_register" : ""
+      } `}
+    >
       <div className="authentication__header">
         <Logo />
         <h1 className="authentication__title">{title}</h1>
@@ -21,7 +33,7 @@ function Authentication({ title, children, btnName, helperText, helperLink }) {
       </form>
       <div className="authentication__helper">
         <p className="authentication__helper-text">{helperText}</p>
-        <Link to="/signup" className="authentication__helper-link">
+        <Link to={helperLinkTo} className="authentication__helper-link">
           {helperLink}
         </Link>
       </div>

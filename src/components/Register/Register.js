@@ -7,6 +7,8 @@ function Register() {
       btnName="Зарегистрироваться"
       helperText="Уже зарегистрированы?"
       helperLink="Войти"
+      type="register"
+      helperLinkTo="/signin"
     >
       <label className="authentication__label" htmlFor="name">
         Имя

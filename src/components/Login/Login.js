@@ -7,6 +7,8 @@ function Login() {
       btnName="Войти"
       helperText="Ещё не зарегистрированы?"
       helperLink="Регистрация"
+      type="login"
+      helperLinkTo="/signup"
     >
       <label className="authentication__label" htmlFor="email">
         E-mail

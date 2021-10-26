@@ -16,7 +16,11 @@ function MoviesCard({ film, type }) {
           aria-label="добавить в избранное"
         ></button>
       </div>
-      <img src={film.poster} alt="постер" className="movie__poster" />
+      <img
+        src={film.poster}
+        alt={`${film.title} постер`}
+        className="movie__poster"
+      />
     </li>
   );
 }
