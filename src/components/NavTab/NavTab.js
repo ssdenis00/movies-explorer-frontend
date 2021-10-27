@@ -3,11 +3,14 @@ import "./NavTab.css";
 
 function NavTab() {
   return (
-    <nav className="navigation">
-      <Link to="/signup" className="navigation__link">
+    <nav className="nav-tab">
+      <Link to="/signup" className="nav-tab__link link-hover">
         Регистрация
       </Link>
-      <Link to="/signin" className="navigation__link navigation__link_type_btn">
+      <Link
+        to="/signin"
+        className="nav-tab__link nav-tab__link_type_btn link-hover"
+      >
         Войти
       </Link>
     </nav>

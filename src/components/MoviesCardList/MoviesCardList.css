@@ -12,3 +12,15 @@
   flex-direction: column;
   gap: 40px;
 }
+
+@media (max-width: 425px) {
+  .movies {
+    padding-top: 50px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .movies__list {
+    gap: 20px;
+  }
+}

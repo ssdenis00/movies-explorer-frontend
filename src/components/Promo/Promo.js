@@ -12,7 +12,7 @@ function Promo() {
         <p className="promo__subtitle">
           Листайте ниже, чтобы узнать больше про этот проект и его создателя.
         </p>
-        <Link to="/" className="promo__link">
+        <Link to="/" className="promo__link link-hover">
           Узнать больше
         </Link>
       </div>

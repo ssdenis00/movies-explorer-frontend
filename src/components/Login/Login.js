@@ -19,6 +19,7 @@ function Login() {
         name="email"
         id="login-email"
         required
+        placeholder="Email"
       />
       <span className="authentication__err"></span>
       <label className="authentication__label" htmlFor="login-password">
@@ -30,6 +31,7 @@ function Login() {
         name="password"
         id="login-password"
         required
+        placeholder="Пароль"
       />
       <span className="authentication__err"></span>
     </Authentication>

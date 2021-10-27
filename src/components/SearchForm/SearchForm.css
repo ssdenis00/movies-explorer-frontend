@@ -23,6 +23,14 @@
   gap: 10px;
 }
 
+.search-form__block {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 17px;
+  width: 100%;
+}
+
 .search-form__label {
   flex-shrink: 0;
   display: block;
@@ -48,11 +56,38 @@
   flex-shrink: 0;
   color: inherit;
   box-sizing: border-box;
-  padding: 8px 10px;
+  width: 58px;
+  height: 34px;
   background: #4285f4;
   border: none;
   border-radius: 48px;
   font-weight: 500;
   font-size: 11px;
   line-height: 18px;
+}
+
+@media (max-width: 660px) {
+  .search::after {
+    margin-top: 45px;
+  }
+
+  .search-form {
+    flex-direction: column;
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
+    gap: 45px;
+  }
+
+  .search-form__label {
+    display: none;
+  }
+
+  .search-form__block {
+    box-sizing: border-box;
+    padding: 19px;
+    background: #222222;
+    box-shadow: 0px 3px 14px rgba(0, 0, 0, 0.08);
+    border-radius: 9px;
+  }
 }

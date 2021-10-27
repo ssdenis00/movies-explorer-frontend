@@ -33,7 +33,10 @@ function Authentication({
       </form>
       <div className="authentication__helper">
         <p className="authentication__helper-text">{helperText}</p>
-        <Link to={helperLinkTo} className="authentication__helper-link">
+        <Link
+          to={helperLinkTo}
+          className="authentication__helper-link link-hover"
+        >
           {helperLink}
         </Link>
       </div>

@@ -6,7 +6,7 @@ function Modal({ title, children, btnName, state, closeModal }) {
       <div className="modal__container">
         <button
           type="button"
-          className="modal__close-btn"
+          className="modal__close-btn link-hover"
           aria-label="закрыть окно"
           onClick={closeModal}
         ></button>

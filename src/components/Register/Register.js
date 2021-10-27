@@ -19,6 +19,7 @@ function Register() {
         name="name"
         id="register-name"
         required
+        placeholder="Имя"
       />
       <span className="authentication__err"></span>
       <label className="authentication__label" htmlFor="register-email">
@@ -30,6 +31,7 @@ function Register() {
         name="email"
         id="register-email"
         required
+        placeholder="Email"
       />
       <span className="authentication__err"></span>
       <label className="authentication__label" htmlFor="register-password">
@@ -41,6 +43,7 @@ function Register() {
         id="register-password"
         name="password"
         required
+        placeholder="Пароль"
       />
       <span className="authentication__err"></span>
     </Authentication>

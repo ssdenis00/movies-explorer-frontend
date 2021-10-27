@@ -7,6 +7,7 @@
   margin: 0;
   color: #8b8b8b;
   text-align: center;
+  font-weight: normal;
   font-size: 13px;
   line-height: 16px;
   padding: 0 0 20px;
@@ -48,11 +49,22 @@
     padding: 0;
   }
 
+  .footer__title {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
   .footer__links {
     flex-direction: column;
   }
 
+  .footer__link {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
   .footer__year {
     margin-top: 30px;
+    color: #8b8b8b;
   }
 }

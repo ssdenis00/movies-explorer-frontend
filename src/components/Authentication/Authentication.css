@@ -90,6 +90,12 @@
   font-size: 14px;
   line-height: 17px;
   color: #fff;
+  cursor: pointer;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.authentication__btn:hover {
+  opacity: 0.8;
 }
 
 .authentication__helper {

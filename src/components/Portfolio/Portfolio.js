@@ -8,7 +8,7 @@ function Portfolio() {
         <li className="portfolio__item">
           <a
             href="https://ssdenis00.github.io/how-to-learn/"
-            className="portfolio__link"
+            className="portfolio__link link-hover"
             target="_blank"
             rel="noreferrer"
           >
@@ -18,7 +18,7 @@ function Portfolio() {
         <li className="portfolio__item">
           <a
             href="https://ssdenis00.github.io/russian-travel/"
-            className="portfolio__link"
+            className="portfolio__link link-hover"
             target="_blank"
             rel="noreferrer"
           >
@@ -28,7 +28,7 @@ function Portfolio() {
         <li className="portfolio__item">
           <a
             href="https://mesto-denis-l.nomoredomains.club/"
-            className="portfolio__link"
+            className="portfolio__link link-hover"
             target="_blank"
             rel="noreferrer"
           >

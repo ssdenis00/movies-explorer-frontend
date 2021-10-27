@@ -5,19 +5,21 @@ function SearchForm() {
   return (
     <section className="search section">
       <form action="/" className="search-form">
-        <label
-          htmlFor="search-form__input"
-          className="search-form__label"
-        ></label>
-        <input
-          type="text"
-          className="search-form__input"
-          id="search-form__input"
-          placeholder="Фильмы"
-        />
-        <button type="submit" className="search-form__btn">
-          Найти
-        </button>
+        <div className="search-form__block">
+          <label
+            htmlFor="search-form__input"
+            className="search-form__label"
+          ></label>
+          <input
+            type="text"
+            className="search-form__input"
+            id="search-form__input"
+            placeholder="Фильмы"
+          />
+          <button type="submit" className="search-form__btn link-hover">
+            Найти
+          </button>
+        </div>
         <FilterCheckbox />
       </form>
     </section>

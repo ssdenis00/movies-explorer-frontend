@@ -15,7 +15,7 @@ function Techs() {
             href="http://htmlbook.ru/html"
             target="_blank"
             rel="noreferrer"
-            className="techs__link"
+            className="techs__link link-hover"
           >
             HTML
           </a>
@@ -25,7 +25,7 @@ function Techs() {
             href="http://htmlbook.ru/css/help"
             target="_blank"
             rel="noreferrer"
-            className="techs__link"
+            className="techs__link link-hover"
           >
             CSS
           </a>
@@ -35,7 +35,7 @@ function Techs() {
             href="https://learn.javascript.ru/"
             target="_blank"
             rel="noreferrer"
-            className="techs__link"
+            className="techs__link link-hover"
           >
             JS
           </a>
@@ -45,7 +45,7 @@ function Techs() {
             href="https://ru.reactjs.org/"
             target="_blank"
             rel="noreferrer"
-            className="techs__link"
+            className="techs__link link-hover"
           >
             React
           </a>
@@ -55,7 +55,7 @@ function Techs() {
             href="https://git-scm.com/"
             target="_blank"
             rel="noreferrer"
-            className="techs__link"
+            className="techs__link link-hover"
           >
             Git
           </a>
@@ -65,7 +65,7 @@ function Techs() {
             href="https://expressjs.com/ru/"
             target="_blank"
             rel="noreferrer"
-            className="techs__link"
+            className="techs__link link-hover"
           >
             Express.js
           </a>
@@ -75,7 +75,7 @@ function Techs() {
             href="https://www.mongodb.com/"
             target="_blank"
             rel="noreferrer"
-            className="techs__link"
+            className="techs__link link-hover"
           >
             mongoDB
           </a>

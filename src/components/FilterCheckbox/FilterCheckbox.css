@@ -15,7 +15,8 @@
 
 .filter__checkbox {
   cursor: pointer;
-  background: #3ddc84;
+  justify-content: flex-start;
+  background: #2f2f2f;
   border: none;
   padding: 2px;
   box-sizing: border-box;
@@ -24,10 +25,16 @@
   height: 14px;
   display: flex;
   align-items: center;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.filter__checkbox:hover {
+  opacity: 0.7;
 }
 
 .filter__checkbox_checked {
-  justify-content: end;
+  justify-content: flex-end;
+  background: #3ddc84;
 }
 
 .filter__checkbox-circle {
@@ -36,4 +43,10 @@
   display: block;
   background: #ffffff;
   border-radius: 50%;
+}
+
+@media (max-width: 660px) {
+  .filter::before {
+    border: none;
+  }
 }

@@ -9,15 +9,21 @@ function Footer() {
       <div className="footer__block">
         <p className="footer__year">&copy; 2021</p>
         <div className="footer__links">
-          <a href="https://practicum.yandex.ru" className="footer__link">
+          <a
+            href="https://practicum.yandex.ru"
+            className="footer__link link-hover"
+          >
             Яндекс.Практикум
           </a>
-          <a href="https://github.com/ssdenis00" className="footer__link">
+          <a
+            href="https://github.com/ssdenis00"
+            className="footer__link link-hover"
+          >
             Github
           </a>
           <a
             href="https://www.facebook.com/profile.php?id=100064646079831"
-            className="footer__link"
+            className="footer__link link-hover"
           >
             Facebook
           </a>

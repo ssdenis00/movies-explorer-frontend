@@ -1,5 +1,5 @@
 import "./AboutMe.css";
-import aboutMeAvatar from "../../images/about-me-avatar.PNG";
+import aboutMeAvatar from "../../images/about-me-avatar.png";
 
 function AboutMe() {
   return (
@@ -18,7 +18,7 @@ function AboutMe() {
           <div className="about-me__socials">
             <a
               href="https://www.facebook.com/profile.php?id=100064646079831"
-              className="about-me__link"
+              className="about-me__link link-hover"
               target="_blank"
               rel="noreferrer"
             >
@@ -26,7 +26,7 @@ function AboutMe() {
             </a>
             <a
               href="https://github.com/ssdenis00"
-              className="about-me__link"
+              className="about-me__link link-hover"
               target="_blank"
               rel="noreferrer"
             >

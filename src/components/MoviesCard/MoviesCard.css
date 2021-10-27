@@ -12,6 +12,7 @@
   display: flex;
   flex-direction: column;
   margin: 16px 0 16px 16px;
+  box-sizing: border-box;
 }
 
 .movie__title {
@@ -30,6 +31,7 @@
 }
 
 .movie__like-btn {
+  flex-shrink: 0;
   margin-top: auto;
   cursor: pointer;
   display: block;
@@ -58,4 +60,38 @@
   height: 122px;
   object-fit: cover;
   object-position: center;
+}
+
+@media (max-width: 425px) {
+  .movie {
+    flex-direction: column-reverse;
+    align-items: center;
+    padding: 0;
+  }
+
+  .movie__poster {
+    width: 300px;
+    height: 168px;
+  }
+
+  .movie__info {
+    width: 100%;
+    padding: 14px 16px 14px 12px;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .movie__title {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .movie__duration {
+    font-size: 11px;
+    line-height: 13px;
+  }
+
+  .movie__like-btn {
+    margin-top: 3px;
+  }
 }

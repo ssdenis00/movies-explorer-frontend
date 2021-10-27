@@ -17,10 +17,17 @@ function Profile({ openModal }) {
           </li>
         </ul>
         <div className="profile__links">
-          <button onClick={openModal} type="button" className="profile__link">
+          <button
+            onClick={openModal}
+            type="button"
+            className="profile__link link-hover"
+          >
             Редактировать
           </button>
-          <Link to="/" className="profile__link profile__link_type_exit">
+          <Link
+            to="/"
+            className="profile__link profile__link_type_exit link-hover"
+          >
             Выйти из аккаунта
           </Link>
         </div>

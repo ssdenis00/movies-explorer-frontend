@@ -8,7 +8,7 @@ function Movies() {
     <main className="main">
       <SearchForm />
       <MoviesCardList films={films} type="all" />
-      <button type="button" className="more-btn">
+      <button type="button" className="more-btn link-hover">
         Ещё
       </button>
     </main>
