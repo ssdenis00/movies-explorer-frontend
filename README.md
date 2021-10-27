@@ -1,5 +1,9 @@
 # Getting Started with Create React App
 
+макет - https://www.figma.com/proto/wJIShPMRQFuogV4GkT442W/Diploma-(Copy)?page-id=891%3A3857&node-id=932%3A3228&viewport=241%2C48%2C0.32&scaling=min-zoom
+
+домен - https://movies.dip.nomoredomains.monster
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
