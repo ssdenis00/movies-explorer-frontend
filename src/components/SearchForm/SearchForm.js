@@ -15,6 +15,7 @@ function SearchForm() {
             className="search-form__input"
             id="search-form__input"
             placeholder="Фильмы"
+            required
           />
           <button type="submit" className="search-form__btn link-hover">
             Найти
