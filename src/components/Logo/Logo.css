@@ -1,0 +1,12 @@
+.logo {
+  display: block;
+  width: 38px;
+  height: 38px;
+  background: center / contain url("../../images/header-logo.svg") no-repeat;
+}
+
+@media (max-width: 425px) {
+  .logo_place_authentication {
+    margin: 0 auto;
+  }
+}

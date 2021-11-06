@@ -1,0 +1,32 @@
+.nav-tab {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.nav-tab__link {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.nav-tab__link_type_btn {
+  box-sizing: border-box;
+  padding: 8px 20px;
+  background: #3ddc84;
+  border-radius: 3px;
+  color: #000;
+}
+
+@media (max-width: 425px) {
+  .nav-tab {
+    gap: 14px;
+  }
+
+  .nav-tab__link {
+    font-size: 10px;
+  }
+}

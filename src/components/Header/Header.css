@@ -1,0 +1,11 @@
+.header {
+  padding-top: 18px;
+  padding-bottom: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header_type_landing {
+  background: #073042;
+}

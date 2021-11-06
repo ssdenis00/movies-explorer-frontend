@@ -1,0 +1,140 @@
+.authentication {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 400px;
+  height: 100vh;
+  box-sizing: border-box;
+  padding: 70px 0;
+}
+
+.authentication_type_register {
+  justify-content: stretch;
+}
+
+.authentication__title {
+  margin: 40px 0 0;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+  color: #fff;
+}
+.authentication__form {
+  margin: 40px 0 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.authentication__form_type_register {
+  height: auto;
+  justify-content: stretch;
+}
+
+.authentication__inputs {
+  display: flex;
+  flex-direction: column;
+}
+.authentication__label {
+  font-size: 10px;
+  line-height: 12px;
+  color: #8b8b8b;
+  margin-bottom: 1px;
+  margin: 24px 0 0;
+}
+
+.authentication__label:first-of-type {
+  margin: 0;
+}
+
+.authentication__input {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #ffffff;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #424242;
+  padding: 10px 0;
+}
+
+.authentication__input_state_error {
+  color: #ee3465;
+}
+
+.authentication__err {
+  display: none;
+  font-size: 10px;
+  line-height: 12px;
+  color: #ee3465;
+  margin: 7px 0 0;
+}
+
+.authentication__err_active {
+  display: block;
+}
+
+.authentication__btn {
+  margin: 50px 0 0;
+  display: block;
+  width: 100%;
+  padding: 13px 0 15px;
+  background: #4285f4;
+  border: none;
+  border-radius: 3px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #fff;
+  cursor: pointer;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.authentication__btn:hover {
+  opacity: 0.8;
+}
+
+.authentication__helper {
+  margin: 15px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.authentication__helper-text {
+  margin: 0;
+  font-size: 14px;
+  line-height: 17px;
+  color: #8b8b8b;
+}
+.authentication__helper-link {
+  text-decoration: none;
+  font-size: 14px;
+  line-height: 17px;
+  color: #4285f4;
+}
+
+@media (max-width: 768px) {
+  .authentication {
+    padding: 232px 0;
+  }
+
+  .authentication__form_type_register {
+    height: 100%;
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 425px) {
+  .authentication {
+    padding: 56px 30px 30px;
+  }
+
+  .authentication__title {
+    text-align: center;
+  }
+}
