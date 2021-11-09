@@ -1,11 +1,20 @@
 import { useState } from "react";
+import mainApi from "../../utils/MainApi";
 import "./MoviesCard.css";
 
 function MoviesCard({ film, type }) {
   const [likeState, setLikeState] = useState(false);
 
   function handleLikeClick() {
-    setLikeState((state) => !state);
+    mainApi
+      .addFilmInFavorite(film)
+      .then((res) => {
+        console.log(res);
+        setLikeState((state) => !state);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   function transformDuration(value) {

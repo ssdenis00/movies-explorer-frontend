@@ -43,6 +43,31 @@ class MainApi {
       },
     }).then(this._getResponseData);
   }
+
+  updateUserData(userData) {
+    return fetch(`${this._url}/users/me`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({
+        name: userData.name,
+      }),
+    }).then(this._getResponseData);
+  }
+
+  toggleFinmInFavorite(data, state) {
+    if (state) {
+      return fetch(`${this._url}/movies/${data._id}`, {
+        method: "DELETE",
+        headers: this._headers,
+      }).then(this._getResponseData);
+    } else {
+      return fetch(`${this._url}/movies`, {
+        method: "POST",
+        headers: this._headers,
+        body: JSON.stringify(data),
+      }).then(this._getResponseData);
+    }
+  }
 }
 
 const mainApi = new MainApi({

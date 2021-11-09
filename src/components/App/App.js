@@ -1,4 +1,4 @@
-import { Route, Switch } from "react-router";
+import { Route, Switch, Redirect } from "react-router";
 import { useState } from "react";
 import "./App.css";
 import Header from "../Header/Header";
@@ -12,10 +12,11 @@ import Register from "../Register/Register";
 import Modal from "../Modal/Modal";
 import NoFoundPage from "../NoFoundPage/NoFoundPage";
 import mainApi from "../../utils/MainApi";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
 function App() {
   const [modalState, setModalState] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
 
   function openModal() {
     setModalState(true);
@@ -29,7 +30,7 @@ function App() {
     mainApi
       .register(data)
       .then((res) => {
-        /* setLoggedIn(true); */
+        setLoggedIn(true);
         console.log(res);
       })
       .catch((err) => console.log(err));
@@ -39,8 +40,10 @@ function App() {
     mainApi
       .login(data)
       .then((res) => {
-        /* setLoggedIn(true); */
-        console.log(res);
+        mainApi.checkToken(res).then((res) => {
+          setLoggedIn(true);
+          console.log(res);
+        });
       })
       .catch((err) => console.log(err));
   }
@@ -72,20 +75,20 @@ function App() {
           <Main />
           <Footer />
         </Route>
-        <Route path="/movies">
+        <ProtectedRoute loggedIn={loggedIn} path="/movies">
           <Header isLogin={loggedIn} />
           <Movies />
           <Footer />
-        </Route>
-        <Route path="/saved-movies">
+        </ProtectedRoute>
+        <ProtectedRoute loggedIn={loggedIn} path="/saved-movies">
           <Header isLogin={loggedIn} />
           <SavedMovies />
           <Footer />
-        </Route>
-        <Route path="/profile">
+        </ProtectedRoute>
+        <ProtectedRoute loggedIn={loggedIn} path="/profile">
           <Header isLogin={loggedIn} />
           <Profile openModal={openModal} />
-        </Route>
+        </ProtectedRoute>
         <Route path="/signin">
           <Login onLogin={login} />
         </Route>
@@ -93,7 +96,7 @@ function App() {
           <Register onRegister={register} />
         </Route>
         <Route path="*">
-          <NoFoundPage />
+          {loggedIn ? <NoFoundPage /> : <Redirect to="/signin" />}
         </Route>
       </Switch>
     </div>
