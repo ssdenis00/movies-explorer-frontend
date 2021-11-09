@@ -11,9 +11,11 @@ import Login from "../Login/Login";
 import Register from "../Register/Register";
 import Modal from "../Modal/Modal";
 import NoFoundPage from "../NoFoundPage/NoFoundPage";
+import mainApi from "../../utils/MainApi";
 
 function App() {
   const [modalState, setModalState] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   function openModal() {
     setModalState(true);
@@ -21,6 +23,15 @@ function App() {
 
   function closeModal() {
     setModalState(false);
+  }
+
+  function register(data) {
+    console.log(data);
+    /* setLoggedIn(true); */
+    mainApi
+      .register(data)
+      .then((res) => {})
+      .catch((err) => console.log(err));
   }
 
   return (
@@ -46,29 +57,29 @@ function App() {
 
       <Switch>
         <Route exact path="/">
-          <Header isLogin={false} />
+          <Header isLogin={loggedIn} />
           <Main />
           <Footer />
         </Route>
         <Route path="/movies">
-          <Header isLogin={true} />
+          <Header isLogin={loggedIn} />
           <Movies />
           <Footer />
         </Route>
         <Route path="/saved-movies">
-          <Header isLogin={true} />
+          <Header isLogin={loggedIn} />
           <SavedMovies />
           <Footer />
         </Route>
         <Route path="/profile">
-          <Header isLogin={true} />
+          <Header isLogin={loggedIn} />
           <Profile openModal={openModal} />
         </Route>
         <Route path="/signin">
           <Login />
         </Route>
         <Route path="/signup">
-          <Register />
+          <Register onRegister={register} />
         </Route>
         <Route path="*">
           <NoFoundPage />

@@ -1,6 +1,33 @@
+import { useState } from "react";
 import Authentication from "../Authentication/Authentication";
 
-function Register() {
+function Register({ onRegister }) {
+  const [inputValueEmail, setInputValueEmail] = useState("");
+  const [inputValuePass, setInputValuePass] = useState("");
+  const [inputValueName, setInputValueName] = useState("");
+
+  function getInputValueEmail(evt) {
+    setInputValueEmail(evt.target.value);
+  }
+
+  function getInputValuePass(evt) {
+    setInputValuePass(evt.target.value);
+  }
+
+  function getInputValueName(evt) {
+    setInputValueName(evt.target.value);
+  }
+
+  function handleSubmit(evt) {
+    evt.preventDefault();
+
+    onRegister({
+      name: inputValueName,
+      email: inputValueEmail,
+      password: inputValuePass,
+    });
+  }
+
   return (
     <Authentication
       title="Добро пожаловать!"
@@ -9,6 +36,7 @@ function Register() {
       helperLink="Войти"
       type="register"
       helperLinkTo="/signin"
+      handleSubmitForm={handleSubmit}
     >
       <label className="authentication__label" htmlFor="register-name">
         Имя
@@ -20,6 +48,8 @@ function Register() {
         id="register-name"
         required
         placeholder="Имя"
+        value={inputValueName}
+        onChange={getInputValueName}
       />
       <span className="authentication__err"></span>
       <label className="authentication__label" htmlFor="register-email">
@@ -31,6 +61,8 @@ function Register() {
         name="email"
         id="register-email"
         required
+        onChange={getInputValueEmail}
+        value={inputValueEmail}
         placeholder="Email"
       />
       <span className="authentication__err"></span>
@@ -43,6 +75,8 @@ function Register() {
         id="register-password"
         name="password"
         required
+        onChange={getInputValuePass}
+        value={inputValuePass}
         placeholder="Пароль"
       />
       <span className="authentication__err"></span>

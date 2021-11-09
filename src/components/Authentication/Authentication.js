@@ -10,6 +10,7 @@ function Authentication({
   helperLink,
   helperLinkTo,
   type,
+  handleSubmitForm,
 }) {
   return (
     <section
@@ -23,6 +24,7 @@ function Authentication({
       </div>
 
       <form
+        onSubmit={handleSubmitForm}
         action="./"
         className="authentication__form authentication__form_type_register"
       >
