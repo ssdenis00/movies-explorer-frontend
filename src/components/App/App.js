@@ -26,11 +26,22 @@ function App() {
   }
 
   function register(data) {
-    console.log(data);
-    /* setLoggedIn(true); */
     mainApi
       .register(data)
-      .then((res) => {})
+      .then((res) => {
+        /* setLoggedIn(true); */
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  }
+
+  function login(data) {
+    mainApi
+      .login(data)
+      .then((res) => {
+        /* setLoggedIn(true); */
+        console.log(res);
+      })
       .catch((err) => console.log(err));
   }
 
@@ -76,7 +87,7 @@ function App() {
           <Profile openModal={openModal} />
         </Route>
         <Route path="/signin">
-          <Login />
+          <Login onLogin={login} />
         </Route>
         <Route path="/signup">
           <Register onRegister={register} />

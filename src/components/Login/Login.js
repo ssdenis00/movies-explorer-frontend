@@ -1,6 +1,27 @@
+import { useState } from "react";
 import Authentication from "../Authentication/Authentication";
 
-function Login() {
+function Login({ onLogin }) {
+  const [inputValueEmail, setInputValueEmail] = useState("");
+  const [inputValuePass, setInputValuePass] = useState("");
+
+  function getInputValueEmail(evt) {
+    setInputValueEmail(evt.target.value);
+  }
+
+  function getInputValuePass(evt) {
+    setInputValuePass(evt.target.value);
+  }
+
+  function handleSubmit(evt) {
+    evt.preventDefault();
+
+    onLogin({
+      email: inputValueEmail,
+      password: inputValuePass,
+    });
+  }
+
   return (
     <Authentication
       title="Рады видеть!"
@@ -9,6 +30,7 @@ function Login() {
       helperLink="Регистрация"
       type="login"
       helperLinkTo="/signup"
+      handleSubmitForm={handleSubmit}
     >
       <label className="authentication__label" htmlFor="login-email">
         E-mail
@@ -20,6 +42,8 @@ function Login() {
         id="login-email"
         required
         placeholder="Email"
+        onChange={getInputValueEmail}
+        value={inputValueEmail}
       />
       <span className="authentication__err"></span>
       <label className="authentication__label" htmlFor="login-password">
@@ -32,6 +56,8 @@ function Login() {
         id="login-password"
         required
         placeholder="Пароль"
+        onChange={getInputValuePass}
+        value={inputValuePass}
       />
       <span className="authentication__err"></span>
     </Authentication>
