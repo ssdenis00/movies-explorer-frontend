@@ -8,12 +8,23 @@ function MoviesCard({ film, type }) {
     setLikeState((state) => !state);
   }
 
+  function transformDuration(value) {
+    if (value >= 60) {
+      let hours = Math.trunc(value / 60);
+      let minuts = value % 60;
+
+      return `${hours} ч. ${minuts} мин`;
+    } else {
+      return `${value} мин`;
+    }
+  }
+
   return (
     <li className="movie">
       <div className="movie__info">
         <div className="movie__text-block">
-          <h2 className="movie__title">{film.title}</h2>
-          <p className="movie__duration">{film.duration}</p>
+          <h2 className="movie__title">{film.nameRU}</h2>
+          <p className="movie__duration">{transformDuration(film.duration)}</p>
         </div>
         <button
           onClick={handleLikeClick}
@@ -29,8 +40,8 @@ function MoviesCard({ film, type }) {
         ></button>
       </div>
       <img
-        src={film.poster}
-        alt={`${film.title} постер`}
+        src={`https://api.nomoreparties.co${film.image.url}`}
+        alt={`${film.image.name} постер`}
         className="movie__poster"
       />
     </li>

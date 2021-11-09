@@ -1,7 +1,12 @@
 .movies {
+  display: none;
   padding-top: 80px;
   padding-bottom: 80px;
   color: #fff;
+}
+
+.movies_active {
+  display: block;
 }
 
 .movies__list {
