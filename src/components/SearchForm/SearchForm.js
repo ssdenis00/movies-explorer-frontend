@@ -2,11 +2,17 @@ import { useState } from "react";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import "./SearchForm.css";
 
-function SearchForm({ handleSubmitForm }) {
+function SearchForm({ onSubmit, onClickCheckbox, checkboxState }) {
   const [inputValue, setInputValue] = useState("");
 
   function handleInputOnChangeValue(evt) {
     setInputValue(evt.target.value);
+  }
+
+  function handleSubmitForm(evt) {
+    evt.preventDefault();
+
+    onSubmit(inputValue);
   }
 
   return (
@@ -30,7 +36,10 @@ function SearchForm({ handleSubmitForm }) {
             Найти
           </button>
         </div>
-        <FilterCheckbox />
+        <FilterCheckbox
+          checkboxState={checkboxState}
+          onClickCheckbox={onClickCheckbox}
+        />
       </form>
     </section>
   );

@@ -50,6 +50,7 @@ class MainApi {
       headers: this._headers,
       body: JSON.stringify({
         name: userData.name,
+        email: userData.email,
       }),
     }).then(this._getResponseData);
   }

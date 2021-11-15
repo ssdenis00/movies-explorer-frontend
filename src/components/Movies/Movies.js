@@ -3,10 +3,22 @@ import SearchForm from "../SearchForm/SearchForm";
 import "./Movies.css";
 import Preloader from "../Preloader/Preloader";
 
-function Movies({ onLike, onSubmit, moviesState, initialFilms, loaderState }) {
+function Movies({
+  onLike,
+  onSubmit,
+  moviesState,
+  initialFilms,
+  loaderState,
+  onClickCheckbox,
+  checkboxState,
+}) {
   return (
     <main className="main">
-      <SearchForm handleSubmitForm={onSubmit} />
+      <SearchForm
+        onSubmit={onSubmit}
+        onClickCheckbox={onClickCheckbox}
+        checkboxState={checkboxState}
+      />
       <Preloader state={loaderState} />
       <MoviesCardList
         type="all"

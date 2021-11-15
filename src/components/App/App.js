@@ -23,10 +23,12 @@ function App() {
   const [initialFilms, setInitialFilms] = useState([]);
   const [loaderState, setLoaderState] = useState(false);
   const [moviesState, setMoviesState] = useState(false);
+  const [checkboxState, setCheckboxState] = useState(false);
 
   const history = useHistory();
 
   const [savedFilms, setSavedFilms] = useState([]);
+  const [savedFilmsSearchResult, setSavedFilmsSearchResult] = useState([]);
 
   useEffect(() => {
     if (loggedIn) {
@@ -97,29 +99,65 @@ function App() {
       });
   }
 
-  function handleSubmitSearchFormAllMovies(evt) {
-    evt.preventDefault();
-    setInitialFilms([]);
-    setLoaderState(true);
+  function handleToggleCheckbox() {
+    setCheckboxState((state) => !state);
+  }
 
-    moviesApi
-      .getInitialFilms()
-      .then((res) => {
-        setInitialFilms(res);
-        setLoaderState(false);
-        setMoviesState(true);
-        console.log(res);
-      })
-      .catch((err) => console.log(err))
-      .finally(() => {
-        setLoaderState(false);
-      });
+  function handleSubmitSearchFormAllMovies(inputValue) {
+    if (inputValue !== "") {
+      setInitialFilms([]);
+      setLoaderState(true);
 
-    /* if (inputValue !== "") {
-      console.log(inputValue);
+      console.log(checkboxState);
+
+      moviesApi
+        .getInitialFilms()
+        .then((films) => {
+          const resultFilms = films.filter((film) => {
+            const transformedInputValue = inputValue.toLowerCase();
+            const transformedFilmName = film.nameRU.toLowerCase();
+
+            return checkboxState
+              ? transformedFilmName.includes(transformedInputValue) &&
+                  film.duration <= 40
+              : transformedFilmName.includes(transformedInputValue);
+          });
+          setInitialFilms(resultFilms);
+          setLoaderState(false);
+          setMoviesState(true);
+        })
+        .catch((err) => console.log(err))
+        .finally(() => {
+          setLoaderState(false);
+        });
     } else {
       console.log("err");
-    } */
+    }
+  }
+
+  function handleSubmitSearchFormSavedFilms(inputValue) {
+    if (inputValue !== "") {
+      const resultFilms = savedFilms.filter((film) => {
+        const transformedInputValue = inputValue.toLowerCase();
+        const transformedFilmName = film.nameRU.toLowerCase();
+
+        return checkboxState
+          ? transformedFilmName.includes(transformedInputValue) &&
+              film.duration <= 40
+          : transformedFilmName.includes(transformedInputValue);
+      });
+
+      setSavedFilmsSearchResult(resultFilms);
+    } else {
+      console.log("err");
+    }
+  }
+
+  function handleSubmitUpdateUserData(userData) {
+    console.log(userData);
+    mainApi.updateUserData(userData).then((userData) => {
+      setUserData(userData);
+    });
   }
 
   return (
@@ -146,17 +184,28 @@ function App() {
                 moviesState={moviesState}
                 initialFilms={initialFilms}
                 loaderState={loaderState}
+                onClickCheckbox={handleToggleCheckbox}
+                checkboxState={checkboxState}
               />
               <Footer />
             </ProtectedRoute>
             <ProtectedRoute loggedIn={loggedIn} path="/saved-movies">
               <Header isLogin={loggedIn} />
-              <SavedMovies onLike={handleLikeClick} />
+              <SavedMovies
+                onLike={handleLikeClick}
+                onSubmit={handleSubmitSearchFormSavedFilms}
+                onClickCheckbox={handleToggleCheckbox}
+                checkboxState={checkboxState}
+                savedFilmsSearchResult={savedFilmsSearchResult}
+              />
               <Footer />
             </ProtectedRoute>
             <ProtectedRoute loggedIn={loggedIn} path="/profile">
               <Header isLogin={loggedIn} />
-              <Profile onExit={handleExitLink} />
+              <Profile
+                onExit={handleExitLink}
+                onSubmit={handleSubmitUpdateUserData}
+              />
             </ProtectedRoute>
             <Route path="/signin">
               {loggedIn ? (
