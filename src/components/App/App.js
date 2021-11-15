@@ -9,7 +9,6 @@ import SavedMovies from "../SavedMovies/SavedMovies";
 import Profile from "../Profile/Profile";
 import Login from "../Login/Login";
 import Register from "../Register/Register";
-import Modal from "../Modal/Modal";
 import NoFoundPage from "../NoFoundPage/NoFoundPage";
 import mainApi from "../../utils/MainApi";
 import moviesApi from "../../utils/MoviesApi";
@@ -18,7 +17,6 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { SavedFilmsContext } from "../../contexts/SavedFilmsContext";
 
 function App() {
-  const [modalState, setModalState] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const [userData, setUserData] = useState({});
 
@@ -52,14 +50,6 @@ function App() {
         .catch((err) => console.log(err));
     }
   }, []);
-
-  function openModal() {
-    setModalState(true);
-  }
-
-  function closeModal() {
-    setModalState(false);
-  }
 
   function handleRegisterSubmit(data) {
     mainApi
@@ -136,25 +126,6 @@ function App() {
     <CurrentUserContext.Provider value={userData}>
       <SavedFilmsContext.Provider value={savedFilms}>
         <div className="app">
-          <Modal
-            title="Редактировать профиль"
-            btnName="Сохранить"
-            state={modalState}
-            closeModal={closeModal}
-          >
-            <label htmlFor="modal-name" className="modal__label">
-              Имя
-            </label>
-            <input
-              placeholder="Имя"
-              type="text"
-              className="modal__input"
-              id="modal-name"
-              required
-            />
-            <span className="modal__err"></span>
-          </Modal>
-
           <Switch>
             <Route exact path="/">
               {loggedIn ? (
@@ -185,7 +156,7 @@ function App() {
             </ProtectedRoute>
             <ProtectedRoute loggedIn={loggedIn} path="/profile">
               <Header isLogin={loggedIn} />
-              <Profile openModal={openModal} onExit={handleExitLink} />
+              <Profile onExit={handleExitLink} />
             </ProtectedRoute>
             <Route path="/signin">
               {loggedIn ? (

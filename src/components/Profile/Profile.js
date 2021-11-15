@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import "./Profile.css";
 
-function Profile({ openModal, onExit }) {
+function Profile({ onExit }) {
   const userData = useContext(CurrentUserContext);
 
   return (
@@ -39,11 +39,7 @@ function Profile({ openModal, onExit }) {
           </ul>
         </form>
         <div className="profile__links">
-          <button
-            onClick={openModal}
-            type="button"
-            className="profile__link link-hover"
-          >
+          <button type="button" className="profile__link link-hover">
             Редактировать
           </button>
           <Link
