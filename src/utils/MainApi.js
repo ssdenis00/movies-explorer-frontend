@@ -54,7 +54,20 @@ class MainApi {
     }).then(this._getResponseData);
   }
 
-  toggleFinmInFavorite(data, state) {
+  toggleFilmInFavorite(data, state) {
+    const {
+      id,
+      duration,
+      image,
+      country,
+      director,
+      year,
+      description,
+      trailerLink,
+      nameRU,
+      nameEN,
+    } = data;
+
     if (state) {
       return fetch(`${this._url}/movies/${data._id}`, {
         method: "DELETE",
@@ -64,15 +77,39 @@ class MainApi {
       return fetch(`${this._url}/movies`, {
         method: "POST",
         headers: this._headers,
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          movieId: id,
+          duration,
+          nameEN,
+          nameRU,
+          thumbnail: `https://api.nomoreparties.co${image.formats.thumbnail.url}`,
+          description,
+          image: `https://api.nomoreparties.co${image.url}`,
+          trailer: trailerLink,
+          country,
+          year,
+          director,
+        }),
       }).then(this._getResponseData);
     }
+  }
+
+  getInitialFavoriteFilms() {
+    return fetch(`${this._url}/movies`, {
+      method: "GET",
+      headers: this._headers,
+    }).then(this._getResponseData);
   }
 }
 
 const mainApi = new MainApi({
   url: "https://api.movies.dip.nomoredomains.monster",
-  headers: { "Content-Type": "application/json" },
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: localStorage.getItem("token")
+      ? `Bearer ${localStorage.getItem("token")}`
+      : "",
+  },
 });
 
 export default mainApi;

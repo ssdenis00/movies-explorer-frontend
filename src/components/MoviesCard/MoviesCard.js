@@ -1,21 +1,14 @@
-import { useState } from "react";
-import mainApi from "../../utils/MainApi";
+import { useContext } from "react";
+import { SavedFilmsContext } from "../../contexts/SavedFilmsContext";
 import "./MoviesCard.css";
 
-function MoviesCard({ film, type }) {
-  const [likeState, setLikeState] = useState(false);
+function MoviesCard({ film, type, onLike }) {
+  const films = useContext(SavedFilmsContext);
 
-  function handleLikeClick() {
-    mainApi
-      .addFilmInFavorite(film)
-      .then((res) => {
-        console.log(res);
-        setLikeState((state) => !state);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
+  const isLiked =
+    type === "all"
+      ? films.some((f) => film.id === f.movieId)
+      : films.some((f) => film.movieId === f.movieId);
 
   function transformDuration(value) {
     if (value >= 60) {
@@ -26,6 +19,18 @@ function MoviesCard({ film, type }) {
     } else {
       return `${value} мин`;
     }
+  }
+
+  function handleLikeClick() {
+    let likedFilm = {};
+    films.forEach((item) => {
+      if (item.movieId === film.id) {
+        likedFilm = item;
+      }
+    });
+    type === "all"
+      ? onLike(isLiked ? likedFilm : film, isLiked)
+      : onLike(film, isLiked);
   }
 
   return (
@@ -43,14 +48,18 @@ function MoviesCard({ film, type }) {
               ? "movie__like-btn_type_all"
               : "movie__like-btn_type_saved"
           } ${
-            likeState ? "movie__like-btn_active" : ""
+            isLiked ? "movie__like-btn_active" : ""
           } movie__like-btn link-hover`}
           aria-label="добавить в избранное"
         ></button>
       </div>
       <img
-        src={`https://api.nomoreparties.co${film.image.url}`}
-        alt={`${film.image.name} постер`}
+        src={
+          type === "all"
+            ? `https://api.nomoreparties.co${film.image.url}`
+            : film.image
+        }
+        alt={`${film.nameRU} постер`}
         className="movie__poster"
       />
     </li>

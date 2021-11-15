@@ -1,5 +1,5 @@
-import { Route, Switch, Redirect } from "react-router";
-import { useState } from "react";
+import { Route, Switch, Redirect, useHistory } from "react-router";
+import { useEffect, useState } from "react";
 import "./App.css";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
@@ -12,11 +12,46 @@ import Register from "../Register/Register";
 import Modal from "../Modal/Modal";
 import NoFoundPage from "../NoFoundPage/NoFoundPage";
 import mainApi from "../../utils/MainApi";
+import moviesApi from "../../utils/MoviesApi";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import { SavedFilmsContext } from "../../contexts/SavedFilmsContext";
 
 function App() {
   const [modalState, setModalState] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [userData, setUserData] = useState({});
+
+  const [initialFilms, setInitialFilms] = useState([]);
+  const [loaderState, setLoaderState] = useState(false);
+  const [moviesState, setMoviesState] = useState(false);
+
+  const history = useHistory();
+
+  const [savedFilms, setSavedFilms] = useState([]);
+
+  useEffect(() => {
+    if (loggedIn) {
+      mainApi
+        .getInitialFavoriteFilms()
+        .then((films) => {
+          setSavedFilms(films);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [loggedIn]);
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      mainApi
+        .checkToken(localStorage.getItem("token"))
+        .then((userData) => {
+          setUserData(userData);
+          setLoggedIn(true);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, []);
 
   function openModal() {
     setModalState(true);
@@ -26,80 +61,153 @@ function App() {
     setModalState(false);
   }
 
-  function register(data) {
+  function handleRegisterSubmit(data) {
     mainApi
       .register(data)
       .then((res) => {
         setLoggedIn(true);
-        console.log(res);
+        history.push("/singin");
       })
       .catch((err) => console.log(err));
   }
 
-  function login(data) {
+  function handleLoginSubmit(data) {
     mainApi
       .login(data)
       .then((res) => {
-        mainApi.checkToken(res).then((res) => {
-          setLoggedIn(true);
-          console.log(res);
+        localStorage.setItem("token", res.token);
+        setLoggedIn(true);
+        mainApi.checkToken(res.token).then((userData) => {
+          setUserData(userData);
         });
       })
       .catch((err) => console.log(err));
   }
 
-  return (
-    <div className="app">
-      <Modal
-        title="Редактировать профиль"
-        btnName="Сохранить"
-        state={modalState}
-        closeModal={closeModal}
-      >
-        <label htmlFor="modal-name" className="modal__label">
-          Имя
-        </label>
-        <input
-          placeholder="Имя"
-          type="text"
-          className="modal__input"
-          id="modal-name"
-          required
-        />
-        <span className="modal__err"></span>
-      </Modal>
+  function handleExitLink() {
+    setLoggedIn(false);
+    localStorage.removeItem("token");
+  }
 
-      <Switch>
-        <Route exact path="/">
-          <Header isLogin={loggedIn} />
-          <Main />
-          <Footer />
-        </Route>
-        <ProtectedRoute loggedIn={loggedIn} path="/movies">
-          <Header isLogin={loggedIn} />
-          <Movies />
-          <Footer />
-        </ProtectedRoute>
-        <ProtectedRoute loggedIn={loggedIn} path="/saved-movies">
-          <Header isLogin={loggedIn} />
-          <SavedMovies />
-          <Footer />
-        </ProtectedRoute>
-        <ProtectedRoute loggedIn={loggedIn} path="/profile">
-          <Header isLogin={loggedIn} />
-          <Profile openModal={openModal} />
-        </ProtectedRoute>
-        <Route path="/signin">
-          <Login onLogin={login} />
-        </Route>
-        <Route path="/signup">
-          <Register onRegister={register} />
-        </Route>
-        <Route path="*">
-          {loggedIn ? <NoFoundPage /> : <Redirect to="/signin" />}
-        </Route>
-      </Switch>
-    </div>
+  function handleLikeClick(film, isLiked) {
+    mainApi
+      .toggleFilmInFavorite(film, isLiked)
+      .then((likedFilm) => {
+        setSavedFilms((state) => {
+          if (isLiked) {
+            return state.filter((item) => item.movieId !== likedFilm.movieId);
+          } else {
+            return [...state, likedFilm];
+          }
+        });
+        setInitialFilms((state) => state);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  function handleSubmitSearchFormAllMovies(evt) {
+    evt.preventDefault();
+    setInitialFilms([]);
+    setLoaderState(true);
+
+    moviesApi
+      .getInitialFilms()
+      .then((res) => {
+        setInitialFilms(res);
+        setLoaderState(false);
+        setMoviesState(true);
+        console.log(res);
+      })
+      .catch((err) => console.log(err))
+      .finally(() => {
+        setLoaderState(false);
+      });
+
+    /* if (inputValue !== "") {
+      console.log(inputValue);
+    } else {
+      console.log("err");
+    } */
+  }
+
+  return (
+    <CurrentUserContext.Provider value={userData}>
+      <SavedFilmsContext.Provider value={savedFilms}>
+        <div className="app">
+          <Modal
+            title="Редактировать профиль"
+            btnName="Сохранить"
+            state={modalState}
+            closeModal={closeModal}
+          >
+            <label htmlFor="modal-name" className="modal__label">
+              Имя
+            </label>
+            <input
+              placeholder="Имя"
+              type="text"
+              className="modal__input"
+              id="modal-name"
+              required
+            />
+            <span className="modal__err"></span>
+          </Modal>
+
+          <Switch>
+            <Route exact path="/">
+              {loggedIn ? (
+                <Redirect to="/movies" />
+              ) : (
+                <>
+                  <Header isLogin={loggedIn} />
+                  <Main />
+                  <Footer />
+                </>
+              )}
+            </Route>
+            <ProtectedRoute loggedIn={loggedIn} path="/movies">
+              <Header isLogin={loggedIn} />
+              <Movies
+                onLike={handleLikeClick}
+                onSubmit={handleSubmitSearchFormAllMovies}
+                moviesState={moviesState}
+                initialFilms={initialFilms}
+                loaderState={loaderState}
+              />
+              <Footer />
+            </ProtectedRoute>
+            <ProtectedRoute loggedIn={loggedIn} path="/saved-movies">
+              <Header isLogin={loggedIn} />
+              <SavedMovies onLike={handleLikeClick} />
+              <Footer />
+            </ProtectedRoute>
+            <ProtectedRoute loggedIn={loggedIn} path="/profile">
+              <Header isLogin={loggedIn} />
+              <Profile openModal={openModal} onExit={handleExitLink} />
+            </ProtectedRoute>
+            <Route path="/signin">
+              {loggedIn ? (
+                <Redirect to="/movies" />
+              ) : (
+                <Login onLogin={handleLoginSubmit} />
+              )}
+            </Route>
+            <Route path="/signup">
+              {loggedIn ? (
+                <Redirect to="/movies" />
+              ) : (
+                <Register onRegister={handleRegisterSubmit} />
+              )}
+            </Route>
+            <Route path="*">
+              {loggedIn ? <NoFoundPage /> : <Redirect to="/signin" />}
+            </Route>
+          </Switch>
+        </div>
+      </SavedFilmsContext.Provider>
+    </CurrentUserContext.Provider>
   );
 }
 

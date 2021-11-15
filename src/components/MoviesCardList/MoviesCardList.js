@@ -1,16 +1,12 @@
-import { useContext } from "react";
-import { InitialFilmsContext } from "../../contexts/initialFilms";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import "./MoviesCardList.css";
 
-function MoviesCardList({ type, state }) {
-  const initialFilms = useContext(InitialFilmsContext);
-
+function MoviesCardList({ type, state, films, onLike }) {
   return (
     <section className={`movies section ${state ? "movies_active" : ""}`}>
       <ul className="movies__list">
-        {initialFilms.map((film) => {
-          return <MoviesCard key={film.id} film={film} type={type} />;
+        {films.map((film, i) => {
+          return <MoviesCard key={i} film={film} type={type} onLike={onLike} />;
         })}
       </ul>
     </section>

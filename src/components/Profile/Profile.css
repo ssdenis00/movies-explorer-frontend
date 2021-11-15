@@ -29,6 +29,8 @@
 .profile__item {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  gap: 10px;
   padding: 16px 0;
   border-bottom: 1px solid #424242;
 }
@@ -37,16 +39,24 @@
   border: none;
 }
 
-.profile__item-title {
+.profile__label {
   font-weight: 500;
   font-size: 11px;
   line-height: 13px;
+  flex-shrink: 0;
 }
 
-.profile__value {
+.profile__input {
+  text-align: right;
+  color: inherit;
   font-weight: normal;
+  padding: 5px 10px;
+  box-sizing: border-box;
   font-size: 11px;
   line-height: 13px;
+  background: transparent;
+  border: none;
+  width: 100%;
 }
 
 .profile__links {
