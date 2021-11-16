@@ -1,31 +1,21 @@
-import { useState } from "react";
 import Authentication from "../Authentication/Authentication";
+import { useFormWithValidation } from "../Validate/Validate";
 
 function Register({ onRegister }) {
-  const [inputValueEmail, setInputValueEmail] = useState("");
-  const [inputValuePass, setInputValuePass] = useState("");
-  const [inputValueName, setInputValueName] = useState("");
+  const validateForm = useFormWithValidation({}, true);
 
-  function getInputValueEmail(evt) {
-    setInputValueEmail(evt.target.value);
-  }
-
-  function getInputValuePass(evt) {
-    setInputValuePass(evt.target.value);
-  }
-
-  function getInputValueName(evt) {
-    setInputValueName(evt.target.value);
-  }
+  console.log(validateForm);
 
   function handleSubmit(evt) {
     evt.preventDefault();
 
-    onRegister({
-      name: inputValueName,
-      email: inputValueEmail,
-      password: inputValuePass,
-    });
+    if (validateForm.isValid) {
+      onRegister({
+        name: validateForm.values.name,
+        email: validateForm.values.email,
+        password: validateForm.values.password,
+      });
+    }
   }
 
   return (
@@ -37,6 +27,7 @@ function Register({ onRegister }) {
       type="register"
       helperLinkTo="/signin"
       handleSubmitForm={handleSubmit}
+      isValid={validateForm.isValid}
     >
       <label className="authentication__label" htmlFor="register-name">
         Имя
@@ -47,11 +38,13 @@ function Register({ onRegister }) {
         name="name"
         id="register-name"
         required
+        minLength="3"
+        maxLength="24"
         placeholder="Имя"
-        value={inputValueName}
-        onChange={getInputValueName}
+        value={validateForm.values.name || ""}
+        onChange={validateForm.handleChange}
       />
-      <span className="authentication__err"></span>
+      <span className="authentication__err">{validateForm.errors.name}</span>
       <label className="authentication__label" htmlFor="register-email">
         E-mail
       </label>
@@ -61,11 +54,11 @@ function Register({ onRegister }) {
         name="email"
         id="register-email"
         required
-        onChange={getInputValueEmail}
-        value={inputValueEmail}
+        onChange={validateForm.handleChange}
+        value={validateForm.values.email || ""}
         placeholder="Email"
       />
-      <span className="authentication__err"></span>
+      <span className="authentication__err">{validateForm.errors.email}</span>
       <label className="authentication__label" htmlFor="register-password">
         Пароль
       </label>
@@ -75,11 +68,13 @@ function Register({ onRegister }) {
         id="register-password"
         name="password"
         required
-        onChange={getInputValuePass}
-        value={inputValuePass}
+        onChange={validateForm.handleChange}
+        value={validateForm.values.password || ""}
         placeholder="Пароль"
       />
-      <span className="authentication__err"></span>
+      <span className="authentication__err">
+        {validateForm.errors.password}
+      </span>
     </Authentication>
   );
 }

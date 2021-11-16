@@ -154,7 +154,6 @@ function App() {
   }
 
   function handleSubmitUpdateUserData(userData) {
-    console.log(userData);
     mainApi.updateUserData(userData).then((userData) => {
       setUserData(userData);
     });

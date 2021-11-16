@@ -1,28 +1,29 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import { useFormWithValidation } from "../Validate/Validate";
 import "./Profile.css";
 
 function Profile({ onExit, onSubmit }) {
   const userData = useContext(CurrentUserContext);
-  const [inputValueName, setInputValueName] = useState(userData.name);
-  const [inputValueEmail, setInputValueEmail] = useState(userData.email);
-
-  function handleOnChangeInputName(evt) {
-    setInputValueName(evt.target.value);
-  }
-
-  function handleOnChangeInputEmail(evt) {
-    setInputValueEmail(evt.target.value);
-  }
+  const validateForm = useFormWithValidation(
+    {
+      name: userData.name,
+      email: userData.email,
+    },
+    false
+  );
 
   function handleSubmitForm(evt) {
     evt.preventDefault();
 
-    onSubmit({
-      name: inputValueName,
-      email: inputValueEmail,
-    });
+    if (validateForm.isValid) {
+      onSubmit({
+        name: validateForm.values.name,
+        email: validateForm.values.email,
+      });
+    } else {
+    }
   }
 
   return (
@@ -38,10 +39,11 @@ function Profile({ onExit, onSubmit }) {
               <input
                 type="text"
                 className="profile__input"
-                value={inputValueName}
+                value={validateForm.values.name || ""}
                 name="name"
                 id="name"
-                onChange={handleOnChangeInputName}
+                required
+                onChange={validateForm.handleChange}
               />
             </li>
             <li className="profile__item">
@@ -52,9 +54,10 @@ function Profile({ onExit, onSubmit }) {
                 type="email"
                 className="profile__input"
                 name="email"
-                value={inputValueEmail}
+                required
+                value={validateForm.values.email}
                 id="email"
-                onChange={handleOnChangeInputEmail}
+                onChange={validateForm.handleChange}
               />
             </li>
           </ul>
@@ -62,7 +65,9 @@ function Profile({ onExit, onSubmit }) {
         <div className="profile__links">
           <button
             type="submit"
-            className="profile__link link-hover"
+            className={`profile__link link-hover ${
+              validateForm.isValid ? "" : "profile__link_disabled"
+            }`}
             onClick={handleSubmitForm}
           >
             Редактировать

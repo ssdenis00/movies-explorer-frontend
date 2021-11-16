@@ -1,25 +1,18 @@
-import { useState } from "react";
 import Authentication from "../Authentication/Authentication";
+import { useFormWithValidation } from "../Validate/Validate";
 
 function Login({ onLogin }) {
-  const [inputValueEmail, setInputValueEmail] = useState("");
-  const [inputValuePass, setInputValuePass] = useState("");
-
-  function getInputValueEmail(evt) {
-    setInputValueEmail(evt.target.value);
-  }
-
-  function getInputValuePass(evt) {
-    setInputValuePass(evt.target.value);
-  }
+  const validateForm = useFormWithValidation({}, true);
 
   function handleSubmit(evt) {
     evt.preventDefault();
 
-    onLogin({
-      email: inputValueEmail,
-      password: inputValuePass,
-    });
+    if (validateForm.isValid) {
+      onLogin({
+        email: validateForm.values.email,
+        password: validateForm.values.password,
+      });
+    }
   }
 
   return (
@@ -31,6 +24,7 @@ function Login({ onLogin }) {
       type="login"
       helperLinkTo="/signup"
       handleSubmitForm={handleSubmit}
+      isValid={validateForm.isValid}
     >
       <label className="authentication__label" htmlFor="login-email">
         E-mail
@@ -42,10 +36,10 @@ function Login({ onLogin }) {
         id="login-email"
         required
         placeholder="Email"
-        onChange={getInputValueEmail}
-        value={inputValueEmail}
+        onChange={validateForm.handleChange}
+        value={validateForm.values.email || ""}
       />
-      <span className="authentication__err"></span>
+      <span className="authentication__err">{validateForm.errors.email}</span>
       <label className="authentication__label" htmlFor="login-password">
         Пароль
       </label>
@@ -56,10 +50,12 @@ function Login({ onLogin }) {
         id="login-password"
         required
         placeholder="Пароль"
-        onChange={getInputValuePass}
-        value={inputValuePass}
+        onChange={validateForm.handleChange}
+        value={validateForm.values.password || ""}
       />
-      <span className="authentication__err"></span>
+      <span className="authentication__err">
+        {validateForm.errors.password}
+      </span>
     </Authentication>
   );
 }
