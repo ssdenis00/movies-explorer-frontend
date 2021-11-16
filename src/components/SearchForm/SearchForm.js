@@ -17,7 +17,12 @@ function SearchForm({ onSubmit, onClickCheckbox, checkboxState }) {
 
   return (
     <section className="search section">
-      <form action="/" onSubmit={handleSubmitForm} className="search-form">
+      <form
+        action="/"
+        onSubmit={handleSubmitForm}
+        className="search-form"
+        noValidate
+      >
         <div className="search-form__block">
           <label
             htmlFor="search-form__input"

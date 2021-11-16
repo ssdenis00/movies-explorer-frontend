@@ -11,6 +11,7 @@ function Movies({
   loaderState,
   onClickCheckbox,
   checkboxState,
+  errorMessage,
 }) {
   return (
     <main className="main">
@@ -26,6 +27,15 @@ function Movies({
         films={initialFilms}
         onLike={onLike}
       />
+
+      {initialFilms === undefined || initialFilms.length === 0 ? (
+        <section className="section">
+          <p className="section__error-message">{errorMessage}</p>
+        </section>
+      ) : (
+        <></>
+      )}
+
       <button
         type="button"
         className={`more-btn link-hover ${

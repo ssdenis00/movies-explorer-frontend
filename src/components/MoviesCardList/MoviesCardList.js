@@ -9,7 +9,11 @@ function MoviesCardList({
   savedFilmsSearchResult,
 }) {
   return (
-    <section className={`movies section ${state ? "movies_active" : ""}`}>
+    <section
+      className={`movies section ${
+        state && films.length !== 0 ? "movies_active" : ""
+      }`}
+    >
       <ul className="movies__list">
         {savedFilmsSearchResult !== undefined &&
         savedFilmsSearchResult.length !== 0

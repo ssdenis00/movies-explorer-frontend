@@ -24,6 +24,7 @@ function App() {
   const [loaderState, setLoaderState] = useState(false);
   const [moviesState, setMoviesState] = useState(false);
   const [checkboxState, setCheckboxState] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const history = useHistory();
 
@@ -104,11 +105,9 @@ function App() {
   }
 
   function handleSubmitSearchFormAllMovies(inputValue) {
-    if (inputValue !== "") {
+    if (inputValue.trim() !== "") {
       setInitialFilms([]);
       setLoaderState(true);
-
-      console.log(checkboxState);
 
       moviesApi
         .getInitialFilms()
@@ -122,21 +121,29 @@ function App() {
                   film.duration <= 40
               : transformedFilmName.includes(transformedInputValue);
           });
+          if (resultFilms.length === 0) {
+            setErrorMessage("Ничего не найдено");
+          }
           setInitialFilms(resultFilms);
           setLoaderState(false);
           setMoviesState(true);
         })
-        .catch((err) => console.log(err))
+        .catch((err) => {
+          setErrorMessage(
+            "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
+          );
+          console.log(err);
+        })
         .finally(() => {
           setLoaderState(false);
         });
     } else {
-      console.log("err");
+      setErrorMessage("Нужно ввести ключевое слово");
     }
   }
 
   function handleSubmitSearchFormSavedFilms(inputValue) {
-    if (inputValue !== "") {
+    if (inputValue.trim() !== "") {
       const resultFilms = savedFilms.filter((film) => {
         const transformedInputValue = inputValue.toLowerCase();
         const transformedFilmName = film.nameRU.toLowerCase();
@@ -149,7 +156,7 @@ function App() {
 
       setSavedFilmsSearchResult(resultFilms);
     } else {
-      console.log("err");
+      setErrorMessage("Нужно ввести ключевое слово");
     }
   }
 
@@ -185,6 +192,7 @@ function App() {
                 loaderState={loaderState}
                 onClickCheckbox={handleToggleCheckbox}
                 checkboxState={checkboxState}
+                errorMessage={errorMessage}
               />
               <Footer />
             </ProtectedRoute>
