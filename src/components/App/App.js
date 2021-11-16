@@ -26,21 +26,10 @@ function App() {
   const [checkboxState, setCheckboxState] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const history = useHistory();
-
   const [savedFilms, setSavedFilms] = useState([]);
   const [savedFilmsSearchResult, setSavedFilmsSearchResult] = useState([]);
 
-  useEffect(() => {
-    if (loggedIn) {
-      mainApi
-        .getInitialFavoriteFilms()
-        .then((films) => {
-          setSavedFilms(films);
-        })
-        .catch((err) => console.log(err));
-    }
-  }, [loggedIn]);
+  const history = useHistory();
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -53,6 +42,22 @@ function App() {
         .catch((err) => console.log(err));
     }
   }, []);
+
+  useEffect(() => {
+    if (loggedIn && localStorage.getItem("token")) {
+      mainApi
+        .getInitialFavoriteFilms()
+        .then((films) => {
+          setSavedFilms(films);
+        })
+        .catch((err) => {
+          setErrorMessage(
+            "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
+          );
+          console.log(err);
+        });
+    }
+  }, [loggedIn]);
 
   function handleRegisterSubmit(data) {
     mainApi
@@ -69,9 +74,9 @@ function App() {
       .login(data)
       .then((res) => {
         localStorage.setItem("token", res.token);
-        setLoggedIn(true);
         mainApi.checkToken(res.token).then((userData) => {
           setUserData(userData);
+          setLoggedIn(true);
         });
       })
       .catch((err) => console.log(err));
@@ -157,6 +162,7 @@ function App() {
       setSavedFilmsSearchResult(resultFilms);
     } else {
       setErrorMessage("Нужно ввести ключевое слово");
+      setSavedFilmsSearchResult([]);
     }
   }
 
@@ -204,6 +210,7 @@ function App() {
                 onClickCheckbox={handleToggleCheckbox}
                 checkboxState={checkboxState}
                 savedFilmsSearchResult={savedFilmsSearchResult}
+                errorMessage={errorMessage}
               />
               <Footer />
             </ProtectedRoute>

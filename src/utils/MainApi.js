@@ -98,7 +98,10 @@ class MainApi {
   getInitialFavoriteFilms() {
     return fetch(`${this._url}/movies`, {
       method: "GET",
-      headers: this._headers,
+      headers: {
+        ...this._headers,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
     }).then(this._getResponseData);
   }
 }

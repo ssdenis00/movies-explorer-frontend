@@ -13,6 +13,8 @@ function Movies({
   checkboxState,
   errorMessage,
 }) {
+  function showMore() {}
+
   return (
     <main className="main">
       <SearchForm
@@ -37,6 +39,7 @@ function Movies({
       )}
 
       <button
+        onClick={showMore}
         type="button"
         className={`more-btn link-hover ${
           moviesState ? "more-btn_active" : ""

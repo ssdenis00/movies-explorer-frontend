@@ -10,6 +10,7 @@ function SavedMovies({
   onClickCheckbox,
   checkboxState,
   savedFilmsSearchResult,
+  errorMessage,
 }) {
   const films = useContext(SavedFilmsContext);
 
@@ -27,6 +28,14 @@ function SavedMovies({
         films={films}
         savedFilmsSearchResult={savedFilmsSearchResult}
       />
+
+      {films === undefined || films.length === 0 ? (
+        <section className="section">
+          <p className="section__error-message">{errorMessage}</p>
+        </section>
+      ) : (
+        <></>
+      )}
     </main>
   );
 }
