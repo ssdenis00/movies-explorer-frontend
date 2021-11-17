@@ -60,11 +60,18 @@ function App() {
   }, [loggedIn]);
 
   function handleRegisterSubmit(data) {
+    const password = data.password;
     mainApi
       .register(data)
-      .then((res) => {
-        setLoggedIn(true);
-        history.push("/singin");
+      .then((userData) => {
+        const email = userData.email;
+        mainApi.login({ email, password }).then((res) => {
+          localStorage.setItem("token", res.token);
+          mainApi.checkToken(res.token).then((userData) => {
+            setUserData(userData);
+            setLoggedIn(true);
+          });
+        });
       })
       .catch((err) => console.log(err));
   }

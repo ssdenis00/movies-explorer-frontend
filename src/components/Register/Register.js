@@ -4,8 +4,6 @@ import { useFormWithValidation } from "../Validate/Validate";
 function Register({ onRegister }) {
   const validateForm = useFormWithValidation({}, true);
 
-  console.log(validateForm);
-
   function handleSubmit(evt) {
     evt.preventDefault();
 
