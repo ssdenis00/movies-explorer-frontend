@@ -82,6 +82,10 @@
   cursor: default;
 }
 
+.profile__submit {
+  display: none;
+}
+
 .profile__link_disabled:hover {
   transform: scale(1, 1);
 }

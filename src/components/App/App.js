@@ -1,4 +1,4 @@
-import { Route, Switch, Redirect, useHistory } from "react-router";
+import { Route, Switch, Redirect } from "react-router";
 import { useEffect, useState } from "react";
 import "./App.css";
 import Header from "../Header/Header";
@@ -28,8 +28,6 @@ function App() {
 
   const [savedFilms, setSavedFilms] = useState([]);
   const [savedFilmsSearchResult, setSavedFilmsSearchResult] = useState([]);
-
-  const history = useHistory();
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -243,7 +241,7 @@ function App() {
               )}
             </Route>
             <Route path="*">
-              {loggedIn ? <NoFoundPage /> : <Redirect to="/signin" />}
+              <NoFoundPage />
             </Route>
           </Switch>
         </div>

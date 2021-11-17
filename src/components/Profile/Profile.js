@@ -30,7 +30,7 @@ function Profile({ onExit, onSubmit }) {
     <main className="main">
       <section className="profile section">
         <h1 className="profile__title">Привет, {userData.name}!</h1>
-        <form action="/" className="profile__form">
+        <form action="/" className="profile__form" onSubmit={handleSubmitForm}>
           <ul className="profile__list">
             <li className="profile__item">
               <label htmlFor="name" className="profile__label">
@@ -61,6 +61,7 @@ function Profile({ onExit, onSubmit }) {
               />
             </li>
           </ul>
+          <button type="submit" className="profile__submit"></button>
         </form>
         <div className="profile__links">
           <button
