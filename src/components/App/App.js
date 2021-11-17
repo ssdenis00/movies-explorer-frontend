@@ -21,10 +21,12 @@ function App() {
   const [userData, setUserData] = useState({});
 
   const [initialFilms, setInitialFilms] = useState([]);
+  const [initialCountFilms, setInitialCountFilms] = useState(7);
+  const [countFilms, setCountFilms] = useState(initialCountFilms);
   const [loaderState, setLoaderState] = useState(false);
-  const [moviesState, setMoviesState] = useState(false);
   const [checkboxState, setCheckboxState] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [moreBtnState, setMoreBtnState] = useState(true);
 
   const [savedFilms, setSavedFilms] = useState([]);
   const [savedFilmsSearchResult, setSavedFilmsSearchResult] = useState([]);
@@ -42,11 +44,28 @@ function App() {
   }, []);
 
   useEffect(() => {
+    const listener = () => {
+      if (document.width >= 768) {
+        setInitialCountFilms(7);
+      } else {
+        setInitialCountFilms(5);
+      }
+    };
+
+    window.addEventListener("resize", listener);
+
+    return () => {
+      window.removeListener("resize", listener);
+    };
+  }, []);
+
+  useEffect(() => {
     if (loggedIn && localStorage.getItem("token")) {
       mainApi
         .getInitialFavoriteFilms()
         .then((films) => {
           setSavedFilms(films);
+          setSavedFilmsSearchResult(films);
         })
         .catch((err) => {
           setErrorMessage(
@@ -71,7 +90,10 @@ function App() {
           });
         });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setErrorMessage(err);
+        console.log(err);
+      });
   }
 
   function handleLoginSubmit(data) {
@@ -84,7 +106,10 @@ function App() {
           setLoggedIn(true);
         });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setErrorMessage(err);
+        console.log(err);
+      });
   }
 
   function handleExitLink() {
@@ -115,6 +140,8 @@ function App() {
   }
 
   function handleSubmitSearchFormAllMovies(inputValue) {
+    setCountFilms(initialCountFilms);
+    setMoreBtnState(true);
     if (inputValue.trim() !== "") {
       setInitialFilms([]);
       setLoaderState(true);
@@ -122,7 +149,7 @@ function App() {
       moviesApi
         .getInitialFilms()
         .then((films) => {
-          const resultFilms = films.filter((film) => {
+          let resultFilms = films.filter((film) => {
             const transformedInputValue = inputValue.toLowerCase();
             const transformedFilmName = film.nameRU.toLowerCase();
 
@@ -131,12 +158,17 @@ function App() {
                   film.duration <= 40
               : transformedFilmName.includes(transformedInputValue);
           });
+
           if (resultFilms.length === 0) {
             setErrorMessage("Ничего не найдено");
           }
+
+          if (resultFilms.length <= countFilms) {
+            setMoreBtnState(false);
+          }
+
           setInitialFilms(resultFilms);
           setLoaderState(false);
-          setMoviesState(true);
         })
         .catch((err) => {
           setErrorMessage(
@@ -152,6 +184,21 @@ function App() {
     }
   }
 
+  function showMore() {
+    setCountFilms((count) => {
+      if (initialFilms.length > count) {
+        count += initialCountFilms;
+        if (initialFilms.length <= count) {
+          setMoreBtnState(false);
+        }
+      } else {
+        setMoreBtnState(false);
+      }
+
+      return count;
+    });
+  }
+
   function handleSubmitSearchFormSavedFilms(inputValue) {
     if (inputValue.trim() !== "") {
       const resultFilms = savedFilms.filter((film) => {
@@ -164,17 +211,26 @@ function App() {
           : transformedFilmName.includes(transformedInputValue);
       });
 
+      if (resultFilms.length === 0) {
+        setErrorMessage("Ничего не найдено");
+      }
+
       setSavedFilmsSearchResult(resultFilms);
     } else {
-      setErrorMessage("Нужно ввести ключевое слово");
-      setSavedFilmsSearchResult([]);
+      setSavedFilmsSearchResult(savedFilms);
     }
   }
 
   function handleSubmitUpdateUserData(userData) {
-    mainApi.updateUserData(userData).then((userData) => {
-      setUserData(userData);
-    });
+    mainApi
+      .updateUserData(userData)
+      .then((userData) => {
+        setUserData(userData);
+      })
+      .catch((err) => {
+        console.log(err);
+        setErrorMessage(err);
+      });
   }
 
   return (
@@ -198,12 +254,14 @@ function App() {
               <Movies
                 onLike={handleLikeClick}
                 onSubmit={handleSubmitSearchFormAllMovies}
-                moviesState={moviesState}
                 initialFilms={initialFilms}
                 loaderState={loaderState}
                 onClickCheckbox={handleToggleCheckbox}
                 checkboxState={checkboxState}
                 errorMessage={errorMessage}
+                showMore={showMore}
+                count={countFilms}
+                moreBtnState={moreBtnState}
               />
               <Footer />
             </ProtectedRoute>
@@ -224,20 +282,27 @@ function App() {
               <Profile
                 onExit={handleExitLink}
                 onSubmit={handleSubmitUpdateUserData}
+                errorMessage={errorMessage}
               />
             </ProtectedRoute>
             <Route path="/signin">
               {loggedIn ? (
                 <Redirect to="/movies" />
               ) : (
-                <Login onLogin={handleLoginSubmit} />
+                <Login
+                  onLogin={handleLoginSubmit}
+                  errorMessage={errorMessage}
+                />
               )}
             </Route>
             <Route path="/signup">
               {loggedIn ? (
                 <Redirect to="/movies" />
               ) : (
-                <Register onRegister={handleRegisterSubmit} />
+                <Register
+                  onRegister={handleRegisterSubmit}
+                  errorMessage={errorMessage}
+                />
               )}
             </Route>
             <Route path="*">

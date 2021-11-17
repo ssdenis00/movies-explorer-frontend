@@ -4,7 +4,7 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { useFormWithValidation } from "../Validate/Validate";
 import "./Profile.css";
 
-function Profile({ onExit, onSubmit }) {
+function Profile({ onExit, onSubmit, errorMessage }) {
   const userData = useContext(CurrentUserContext);
   const validateForm = useFormWithValidation(
     {
@@ -64,6 +64,7 @@ function Profile({ onExit, onSubmit }) {
           <button type="submit" className="profile__submit"></button>
         </form>
         <div className="profile__links">
+          <span className="profile__err">{errorMessage}</span>
           <button
             type="submit"
             className={`profile__link link-hover ${

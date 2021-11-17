@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { SavedFilmsContext } from "../../contexts/SavedFilmsContext";
 import "./MoviesCard.css";
 
-function MoviesCard({ film, type, onLike }) {
+function MoviesCard({ film, type, onLike, index, count }) {
   const films = useContext(SavedFilmsContext);
 
   const isLiked =
@@ -34,7 +34,7 @@ function MoviesCard({ film, type, onLike }) {
   }
 
   return (
-    <li className="movie">
+    <li className={`movie ${index <= count - 1 ? "" : "movie_hiden"}`}>
       <div className="movie__info">
         <div className="movie__text-block">
           <h2 className="movie__title">{film.nameRU}</h2>

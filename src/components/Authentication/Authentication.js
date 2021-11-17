@@ -12,6 +12,7 @@ function Authentication({
   type,
   handleSubmitForm,
   isValid,
+  errorMessage,
 }) {
   return (
     <section
@@ -31,6 +32,7 @@ function Authentication({
         noValidate
       >
         <div className="authentication__inputs">{children}</div>
+        <span className="authentication__err">{errorMessage}</span>
         <button
           type="submit"
           className={`authentication__btn ${

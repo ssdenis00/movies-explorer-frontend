@@ -9,6 +9,10 @@
   gap: 10px;
 }
 
+.movie_hiden {
+  display: none;
+}
+
 .movie__info {
   display: flex;
   flex-direction: column;

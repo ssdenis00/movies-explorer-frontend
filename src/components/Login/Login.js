@@ -1,7 +1,7 @@
 import Authentication from "../Authentication/Authentication";
 import { useFormWithValidation } from "../Validate/Validate";
 
-function Login({ onLogin }) {
+function Login({ onLogin, errorMessage }) {
   const validateForm = useFormWithValidation({}, true);
 
   function handleSubmit(evt) {
@@ -25,6 +25,7 @@ function Login({ onLogin }) {
       helperLinkTo="/signup"
       handleSubmitForm={handleSubmit}
       isValid={validateForm.isValid}
+      errorMessage={errorMessage}
     >
       <label className="authentication__label" htmlFor="login-email">
         E-mail

@@ -6,15 +6,15 @@ import Preloader from "../Preloader/Preloader";
 function Movies({
   onLike,
   onSubmit,
-  moviesState,
   initialFilms,
   loaderState,
   onClickCheckbox,
   checkboxState,
   errorMessage,
+  showMore,
+  count,
+  moreBtnState,
 }) {
-  function showMore() {}
-
   return (
     <main className="main">
       <SearchForm
@@ -25,24 +25,21 @@ function Movies({
       <Preloader state={loaderState} />
       <MoviesCardList
         type="all"
-        state={moviesState}
         films={initialFilms}
         onLike={onLike}
+        errorMessage={errorMessage}
+        count={count}
       />
-
-      {initialFilms === undefined || initialFilms.length === 0 ? (
-        <section className="section">
-          <p className="section__error-message">{errorMessage}</p>
-        </section>
-      ) : (
-        <></>
-      )}
 
       <button
         onClick={showMore}
         type="button"
         className={`more-btn link-hover ${
-          moviesState ? "more-btn_active" : ""
+          initialFilms !== undefined &&
+          initialFilms.length !== 0 &&
+          moreBtnState
+            ? "more-btn_active"
+            : ""
         }`}
       >
         Ещё

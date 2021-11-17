@@ -1,7 +1,7 @@
 import Authentication from "../Authentication/Authentication";
 import { useFormWithValidation } from "../Validate/Validate";
 
-function Register({ onRegister }) {
+function Register({ onRegister, errorMessage }) {
   const validateForm = useFormWithValidation({}, true);
 
   function handleSubmit(evt) {
@@ -26,6 +26,7 @@ function Register({ onRegister }) {
       helperLinkTo="/signin"
       handleSubmitForm={handleSubmit}
       isValid={validateForm.isValid}
+      errorMessage={errorMessage}
     >
       <label className="authentication__label" htmlFor="register-name">
         Имя
