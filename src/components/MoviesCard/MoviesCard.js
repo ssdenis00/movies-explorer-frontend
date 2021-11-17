@@ -35,33 +35,42 @@ function MoviesCard({ film, type, onLike, index, count }) {
 
   return (
     <li className={`movie ${index <= count - 1 ? "" : "movie_hiden"}`}>
-      <div className="movie__info">
-        <div className="movie__text-block">
-          <h2 className="movie__title">{film.nameRU}</h2>
-          <p className="movie__duration">{transformDuration(film.duration)}</p>
+      <a
+        href={film.trailerLink}
+        target="_blank"
+        className="movie__link"
+        rel="noreferrer"
+      >
+        <div className="movie__info">
+          <div className="movie__text-block">
+            <h2 className="movie__title">{film.nameRU}</h2>
+            <p className="movie__duration">
+              {transformDuration(film.duration)}
+            </p>
+          </div>
+          <button
+            onClick={handleLikeClick}
+            type="button"
+            className={`${
+              type === "all"
+                ? "movie__like-btn_type_all"
+                : "movie__like-btn_type_saved"
+            } ${
+              isLiked ? "movie__like-btn_active" : ""
+            } movie__like-btn link-hover`}
+            aria-label="добавить в избранное"
+          ></button>
         </div>
-        <button
-          onClick={handleLikeClick}
-          type="button"
-          className={`${
+        <img
+          src={
             type === "all"
-              ? "movie__like-btn_type_all"
-              : "movie__like-btn_type_saved"
-          } ${
-            isLiked ? "movie__like-btn_active" : ""
-          } movie__like-btn link-hover`}
-          aria-label="добавить в избранное"
-        ></button>
-      </div>
-      <img
-        src={
-          type === "all"
-            ? `https://api.nomoreparties.co${film.image.url}`
-            : film.image
-        }
-        alt={`${film.nameRU} постер`}
-        className="movie__poster"
-      />
+              ? `https://api.nomoreparties.co${film.image.url}`
+              : film.image
+          }
+          alt={`${film.nameRU} постер`}
+          className="movie__poster"
+        />
+      </a>
     </li>
   );
 }

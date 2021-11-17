@@ -1,16 +1,27 @@
 .movie {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  padding: 6px;
-  box-sizing: border-box;
   margin: 0;
+  padding: 0;
   background: #2f2f2f;
-  gap: 10px;
 }
 
 .movie_hiden {
   display: none;
+}
+
+.movie__link {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  padding: 6px;
+  box-sizing: border-box;
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.3s ease-in;
+}
+
+.movie__link:hover {
+  opacity: 0.6;
 }
 
 .movie__info {
@@ -89,7 +100,7 @@
 }
 
 @media (max-width: 425px) {
-  .movie {
+  .movie__link {
     flex-direction: column-reverse;
     align-items: center;
     padding: 0;
