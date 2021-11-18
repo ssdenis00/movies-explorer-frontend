@@ -68,16 +68,21 @@ class MainApi {
       nameRU,
       nameEN,
     } = data;
-
     if (state) {
       return fetch(`${this._url}/movies/${data._id}`, {
         method: "DELETE",
-        headers: this._headers,
+        headers: {
+          ...this._headers,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
       }).then(this._getResponseData);
     } else {
       return fetch(`${this._url}/movies`, {
         method: "POST",
-        headers: this._headers,
+        headers: {
+          ...this._headers,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
         body: JSON.stringify({
           movieId: id,
           duration,
