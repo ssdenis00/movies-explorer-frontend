@@ -22,7 +22,6 @@ function SavedMovies({
         type="saved"
         onLike={onLike}
         place={"saved"}
-        films={savedFilmsSearchResult}
         savedFilmsSearchResult={savedFilmsSearchResult}
         errorMessage={errorMessage}
       />

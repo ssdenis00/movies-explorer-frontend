@@ -1,4 +1,4 @@
-import { Route, Switch, Redirect } from "react-router";
+import { Route, Switch, Redirect, useHistory } from "react-router";
 import { useEffect, useState } from "react";
 import "./App.css";
 import Header from "../Header/Header";
@@ -30,6 +30,15 @@ function App() {
 
   const [savedFilms, setSavedFilms] = useState([]);
   const [savedFilmsSearchResult, setSavedFilmsSearchResult] = useState([]);
+
+  const [path, setPath] = useState([]);
+  const getPath = document.location.pathname;
+
+  const history = useHistory();
+
+  useEffect(() => {
+    setPath((path) => [...path, getPath]);
+  }, [getPath]);
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -64,6 +73,7 @@ function App() {
       mainApi
         .getInitialFavoriteFilms()
         .then((films) => {
+          films = films.filter((film) => film.owner === userData._id);
           setSavedFilms(films);
           setSavedFilmsSearchResult(films);
         })
@@ -74,7 +84,7 @@ function App() {
           console.log(err);
         });
     }
-  }, [loggedIn]);
+  }, [loggedIn, userData]);
 
   function handleRegisterSubmit(data) {
     const password = data.password;
@@ -82,13 +92,7 @@ function App() {
       .register(data)
       .then((userData) => {
         const email = userData.email;
-        mainApi.login({ email, password }).then((res) => {
-          localStorage.setItem("token", res.token);
-          mainApi.checkToken(res.token).then((userData) => {
-            setUserData(userData);
-            setLoggedIn(true);
-          });
-        });
+        handleLoginSubmit({ email, password });
       })
       .catch((err) => {
         setErrorMessage(err);
@@ -104,6 +108,7 @@ function App() {
         mainApi.checkToken(res.token).then((userData) => {
           setUserData(userData);
           setLoggedIn(true);
+          history.push("/movies");
         });
       })
       .catch((err) => {
@@ -123,11 +128,28 @@ function App() {
       .then((likedFilm) => {
         setSavedFilms((state) => {
           if (isLiked) {
-            return state.filter((item) => item.movieId !== likedFilm.movieId);
+            return state.filter(
+              (item) =>
+                item.movieId !== likedFilm.movieId &&
+                item.owner === userData._id
+            );
           } else {
             return [...state, likedFilm];
           }
         });
+
+        setSavedFilmsSearchResult((state) => {
+          if (isLiked) {
+            return state.filter(
+              (item) =>
+                item.movieId !== likedFilm.movieId &&
+                item.owner === userData._id
+            );
+          } else {
+            return [...state, likedFilm];
+          }
+        });
+
         setInitialFilms((state) => state);
       })
       .catch((err) => {
@@ -287,7 +309,7 @@ function App() {
             </ProtectedRoute>
             <Route path="/signin">
               {loggedIn ? (
-                <Redirect to="/movies" />
+                <Redirect to={path[0] === "/signin" ? "/movies" : path[0]} />
               ) : (
                 <Login
                   onLogin={handleLoginSubmit}
@@ -297,7 +319,7 @@ function App() {
             </Route>
             <Route path="/signup">
               {loggedIn ? (
-                <Redirect to="/movies" />
+                <Redirect to={path[0] === "/signup" ? "/movies" : path[0]} />
               ) : (
                 <Register
                   onRegister={handleRegisterSubmit}

@@ -29,6 +29,7 @@ function Movies({
         onLike={onLike}
         errorMessage={errorMessage}
         count={count}
+        place="all"
       />
 
       <button

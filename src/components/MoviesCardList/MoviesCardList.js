@@ -2,7 +2,6 @@ import MoviesCard from "../MoviesCard/MoviesCard";
 import "./MoviesCardList.css";
 
 function MoviesCardList({
-  type,
   place,
   films,
   onLike,
@@ -18,7 +17,7 @@ function MoviesCardList({
           savedFilmsSearchResult.length !== 0 ? (
             savedFilmsSearchResult.map((film, i) => {
               return (
-                <MoviesCard key={i} film={film} type={type} onLike={onLike} />
+                <MoviesCard key={i} film={film} onLike={onLike} place={place} />
               );
             })
           ) : savedFilmsSearchResult !== undefined &&
@@ -35,8 +34,8 @@ function MoviesCardList({
                 index={i}
                 count={count}
                 film={film}
-                type={type}
                 onLike={onLike}
+                place={place}
               />
             );
           })
