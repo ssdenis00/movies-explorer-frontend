@@ -17,7 +17,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "deploy": "npm run build && scp -r ./build/* ssdenis00@178.154.227.146:/home/ssdenis00/frontend",
+    "deploy": "npm run build && scp -r ./build/* ssdenis00@51.250.8.5:/home/ssdenis00/frontend",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
