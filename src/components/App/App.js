@@ -76,6 +76,7 @@ function App() {
           films = films.filter((film) => film.owner === userData._id);
           setSavedFilms(films);
           setSavedFilmsSearchResult(films);
+          setErrorMessage("");
         })
         .catch((err) => {
           setErrorMessage(
@@ -93,6 +94,7 @@ function App() {
       .then((userData) => {
         const email = userData.email;
         handleLoginSubmit({ email, password });
+        setErrorMessage("");
       })
       .catch((err) => {
         setErrorMessage(err);
@@ -108,6 +110,7 @@ function App() {
         mainApi.checkToken(res.token).then((userData) => {
           setUserData(userData);
           setLoggedIn(true);
+          setErrorMessage("");
           history.push("/movies");
         });
       })
