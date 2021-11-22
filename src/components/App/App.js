@@ -306,7 +306,7 @@ function App() {
             </ProtectedRoute>
             <Route path="/signin">
               {loggedIn ? (
-                <Redirect to={path[0] === "/signin" ? "/movies" : path[0]} />
+                <Redirect to={path[0] === "/signin" ? "/" : path[0]} />
               ) : (
                 <Login
                   onLogin={handleLoginSubmit}
@@ -316,7 +316,7 @@ function App() {
             </Route>
             <Route path="/signup">
               {loggedIn ? (
-                <Redirect to={path[0] === "/signup" ? "/movies" : path[0]} />
+                <Redirect to={path[0] === "/signup" ? "/" : path[0]} />
               ) : (
                 <Register
                   onRegister={handleRegisterSubmit}

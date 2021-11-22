@@ -22,7 +22,7 @@ function Profile({ onExit, onSubmit, errorMessage }) {
         name: validateForm.values.name,
         email: validateForm.values.email,
       });
-    } else {
+      validateForm.resetValidForm();
     }
   }
 
