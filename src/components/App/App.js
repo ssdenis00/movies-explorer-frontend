@@ -264,15 +264,9 @@ function App() {
         <div className="app">
           <Switch>
             <Route exact path="/">
-              {loggedIn ? (
-                <Redirect to="/movies" />
-              ) : (
-                <>
-                  <Header isLogin={loggedIn} />
-                  <Main />
-                  <Footer />
-                </>
-              )}
+              <Header isLogin={loggedIn} place={"landing"} />
+              <Main />
+              <Footer />
             </Route>
             <ProtectedRoute loggedIn={loggedIn} path="/movies">
               <Header isLogin={loggedIn} />
