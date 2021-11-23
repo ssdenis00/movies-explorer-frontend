@@ -2,6 +2,7 @@ import "./SavedMovies.css";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 
 import SearchForm from "../SearchForm/SearchForm";
+import { useEffect } from "react";
 
 function SavedMovies({
   onLike,
@@ -10,7 +11,12 @@ function SavedMovies({
   checkboxState,
   savedFilmsSearchResult,
   errorMessage,
+  setErrorMessage,
 }) {
+  useEffect(() => {
+    setErrorMessage("");
+  }, [setErrorMessage]);
+
   return (
     <main className="main">
       <SearchForm

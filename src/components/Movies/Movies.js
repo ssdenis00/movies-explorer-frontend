@@ -2,6 +2,7 @@ import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import SearchForm from "../SearchForm/SearchForm";
 import "./Movies.css";
 import Preloader from "../Preloader/Preloader";
+import { useEffect } from "react";
 
 function Movies({
   onLike,
@@ -11,10 +12,15 @@ function Movies({
   onClickCheckbox,
   checkboxState,
   errorMessage,
+  setErrorMessage,
   showMore,
   count,
   moreBtnState,
 }) {
+  useEffect(() => {
+    setErrorMessage("");
+  }, [setErrorMessage]);
+
   return (
     <main className="main">
       <SearchForm

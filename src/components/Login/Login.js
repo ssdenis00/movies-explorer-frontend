@@ -1,8 +1,13 @@
+import { useEffect } from "react";
 import Authentication from "../Authentication/Authentication";
 import { useFormWithValidation } from "../Validate/Validate";
 
-function Login({ onLogin, errorMessage }) {
+function Login({ onLogin, errorMessage, setErrorMessage, inputState }) {
   const validateForm = useFormWithValidation({}, true);
+
+  useEffect(() => {
+    setErrorMessage("");
+  }, [setErrorMessage]);
 
   function handleSubmit(evt) {
     evt.preventDefault();
@@ -39,6 +44,7 @@ function Login({ onLogin, errorMessage }) {
         placeholder="Email"
         onChange={validateForm.handleChange}
         value={validateForm.values.email || ""}
+        disabled={inputState ? false : true}
       />
       <span className="authentication__err">{validateForm.errors.email}</span>
       <label className="authentication__label" htmlFor="login-password">
@@ -52,6 +58,7 @@ function Login({ onLogin, errorMessage }) {
         required
         placeholder="Пароль"
         onChange={validateForm.handleChange}
+        disabled={inputState ? false : true}
         value={validateForm.values.password || ""}
       />
       <span className="authentication__err">

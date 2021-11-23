@@ -59,6 +59,10 @@
   width: 100%;
 }
 
+.profile__input:disabled {
+  opacity: 0.5;
+}
+
 .profile__submit {
   display: none;
 }

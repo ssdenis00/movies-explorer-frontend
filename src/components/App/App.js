@@ -1,5 +1,5 @@
 import { Route, Switch, Redirect, useHistory } from "react-router";
-import { useEffect, useState } from "react";
+import { createRef, useEffect, useState } from "react";
 import "./App.css";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
@@ -21,11 +21,18 @@ function App() {
   const [userData, setUserData] = useState({});
 
   const [initialFilms, setInitialFilms] = useState([]);
+  const [filmsSearchResult, setFilmsSearchResult] = useState([]);
+  const [filmsSearchResultWithCheckbox, setFilmsSearchResultWithCheckbox] =
+    useState([]);
+
   const [initialCountFilms, setInitialCountFilms] = useState(7);
   const [countFilms, setCountFilms] = useState(initialCountFilms);
+
   const [loaderState, setLoaderState] = useState(false);
   const [checkboxState, setCheckboxState] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
+  const [inputState, setInputState] = useState(true);
   const [moreBtnState, setMoreBtnState] = useState(true);
 
   const [savedFilms, setSavedFilms] = useState([]);
@@ -35,6 +42,12 @@ function App() {
   const getPath = document.location.pathname;
 
   const history = useHistory();
+
+  const AboutProjectRef = createRef();
+
+  useEffect(() => {
+    history.push(path[0]);
+  }, [history, path]);
 
   useEffect(() => {
     setPath((path) => [...path, getPath]);
@@ -84,11 +97,30 @@ function App() {
           );
           console.log(err);
         });
+
+      if (localStorage.getItem("films")) {
+        setInitialFilms(JSON.parse(localStorage.getItem("films")));
+      } else {
+        moviesApi
+          .getInitialFilms()
+          .then((films) => {
+            localStorage.setItem("films", JSON.stringify(films));
+            setInitialFilms(films);
+          })
+          .catch((err) => {
+            setErrorMessage(
+              "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
+            );
+            console.log(err);
+          });
+      }
     }
   }, [loggedIn, userData]);
 
   function handleRegisterSubmit(data) {
     const password = data.password;
+    setInputState(false);
+
     mainApi
       .register(data)
       .then((userData) => {
@@ -99,10 +131,15 @@ function App() {
       .catch((err) => {
         setErrorMessage(err);
         console.log(err);
+      })
+      .finally(() => {
+        setInputState(true);
       });
   }
 
   function handleLoginSubmit(data) {
+    setInputState(false);
+
     mainApi
       .login(data)
       .then((res) => {
@@ -117,12 +154,16 @@ function App() {
       .catch((err) => {
         setErrorMessage(err);
         console.log(err);
+      })
+      .finally(() => {
+        setInputState(true);
       });
   }
 
   function handleExitLink() {
     setLoggedIn(false);
     localStorage.removeItem("token");
+    localStorage.removeItem("films");
   }
 
   function handleLikeClick(film, isLiked) {
@@ -157,63 +198,59 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
+        setErrorMessage(err);
+        setMoreBtnState(false);
       });
   }
 
   function handleToggleCheckbox() {
     setCheckboxState((state) => !state);
+
+    let resultFilms = filmsSearchResult.filter((film) => {
+      return !checkboxState ? film.duration <= 40 : film;
+    });
+
+    setFilmsSearchResultWithCheckbox(resultFilms);
   }
 
   function handleSubmitSearchFormAllMovies(inputValue) {
+    setLoaderState(true);
     setCountFilms(initialCountFilms);
     setMoreBtnState(true);
+
+    let resultFilms = initialFilms.filter((film) => {
+      const transformedInputValue = inputValue.toLowerCase();
+      const transformedFilmName = film.nameRU.toLowerCase();
+
+      return transformedFilmName.includes(transformedInputValue);
+    });
+
     if (inputValue.trim() !== "") {
-      setInitialFilms([]);
-      setLoaderState(true);
+      if (resultFilms.length === 0) {
+        setFilmsSearchResult([]);
+        setErrorMessage("Ничего не найдено");
+      }
 
-      moviesApi
-        .getInitialFilms()
-        .then((films) => {
-          let resultFilms = films.filter((film) => {
-            const transformedInputValue = inputValue.toLowerCase();
-            const transformedFilmName = film.nameRU.toLowerCase();
+      if (resultFilms.length <= countFilms) {
+        setMoreBtnState(false);
+      }
 
-            return checkboxState
-              ? transformedFilmName.includes(transformedInputValue) &&
-                  film.duration <= 40
-              : transformedFilmName.includes(transformedInputValue);
-          });
-
-          if (resultFilms.length === 0) {
-            setErrorMessage("Ничего не найдено");
-          }
-
-          if (resultFilms.length <= countFilms) {
-            setMoreBtnState(false);
-          }
-
-          setInitialFilms(resultFilms);
-          setLoaderState(false);
-        })
-        .catch((err) => {
-          setErrorMessage(
-            "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
-          );
-          console.log(err);
-        })
-        .finally(() => {
-          setLoaderState(false);
-        });
+      setFilmsSearchResult(resultFilms);
+      setFilmsSearchResultWithCheckbox(resultFilms);
     } else {
+      setFilmsSearchResult([]);
+      setFilmsSearchResultWithCheckbox([]);
       setErrorMessage("Нужно ввести ключевое слово");
     }
+
+    setLoaderState(false);
   }
 
   function showMore() {
     setCountFilms((count) => {
-      if (initialFilms.length > count) {
+      if (filmsSearchResult.length > count) {
         count += initialCountFilms;
-        if (initialFilms.length <= count) {
+        if (filmsSearchResult.length <= count) {
           setMoreBtnState(false);
         }
       } else {
@@ -247,6 +284,8 @@ function App() {
   }
 
   function handleSubmitUpdateUserData(userData) {
+    setInputState(false);
+
     mainApi
       .updateUserData(userData)
       .then((userData) => {
@@ -255,7 +294,17 @@ function App() {
       .catch((err) => {
         console.log(err);
         setErrorMessage(err);
+      })
+      .finally(() => {
+        setInputState(true);
       });
+  }
+
+  function handleLearnMoreBtn() {
+    AboutProjectRef.current.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+    });
   }
 
   return (
@@ -265,7 +314,10 @@ function App() {
           <Switch>
             <Route exact path="/">
               <Header isLogin={loggedIn} place={"landing"} />
-              <Main />
+              <Main
+                AboutProjectRef={AboutProjectRef}
+                onLearnMore={handleLearnMoreBtn}
+              />
               <Footer />
             </Route>
             <ProtectedRoute loggedIn={loggedIn} path="/movies">
@@ -273,11 +325,12 @@ function App() {
               <Movies
                 onLike={handleLikeClick}
                 onSubmit={handleSubmitSearchFormAllMovies}
-                initialFilms={initialFilms}
+                initialFilms={filmsSearchResultWithCheckbox}
                 loaderState={loaderState}
                 onClickCheckbox={handleToggleCheckbox}
                 checkboxState={checkboxState}
                 errorMessage={errorMessage}
+                setErrorMessage={setErrorMessage}
                 showMore={showMore}
                 count={countFilms}
                 moreBtnState={moreBtnState}
@@ -293,6 +346,7 @@ function App() {
                 checkboxState={checkboxState}
                 savedFilmsSearchResult={savedFilmsSearchResult}
                 errorMessage={errorMessage}
+                setErrorMessage={setErrorMessage}
               />
               <Footer />
             </ProtectedRoute>
@@ -302,25 +356,31 @@ function App() {
                 onExit={handleExitLink}
                 onSubmit={handleSubmitUpdateUserData}
                 errorMessage={errorMessage}
+                setErrorMessage={setErrorMessage}
+                inputState={inputState}
               />
             </ProtectedRoute>
             <Route path="/signin">
               {loggedIn ? (
-                <Redirect to={path[0] === "/signin" ? "/" : path[0]} />
+                <Redirect to="/" />
               ) : (
                 <Login
                   onLogin={handleLoginSubmit}
                   errorMessage={errorMessage}
+                  setErrorMessage={setErrorMessage}
+                  inputState={inputState}
                 />
               )}
             </Route>
             <Route path="/signup">
               {loggedIn ? (
-                <Redirect to={path[0] === "/signup" ? "/" : path[0]} />
+                <Redirect to="/" />
               ) : (
                 <Register
                   onRegister={handleRegisterSubmit}
                   errorMessage={errorMessage}
+                  setErrorMessage={setErrorMessage}
+                  inputState={inputState}
                 />
               )}
             </Route>

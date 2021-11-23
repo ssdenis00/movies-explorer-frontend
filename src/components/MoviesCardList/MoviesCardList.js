@@ -14,19 +14,25 @@ function MoviesCardList({
       <ul className="movies__list">
         {place === "saved" ? (
           savedFilmsSearchResult !== undefined &&
-          savedFilmsSearchResult.length !== 0 ? (
-            savedFilmsSearchResult.map((film, i) => {
+          savedFilmsSearchResult.length !== 0 &&
+          errorMessage === "" ? (
+            savedFilmsSearchResult.map((film) => {
               return (
-                <MoviesCard key={i} film={film} onLike={onLike} place={place} />
+                <MoviesCard
+                  key={film.id || film.movieId}
+                  film={film}
+                  onLike={onLike}
+                  place={place}
+                />
               );
             })
           ) : savedFilmsSearchResult !== undefined &&
             savedFilmsSearchResult.length === 0 ? (
             <p className="section__error-message">{errorMessage}</p>
           ) : (
-            <></>
+            <p className="section__error-message">{errorMessage}</p>
           )
-        ) : films !== undefined && films.length !== 0 ? (
+        ) : films !== undefined && films.length !== 0 && errorMessage === "" ? (
           films.map((film, i) => {
             return (
               <MoviesCard
@@ -42,7 +48,7 @@ function MoviesCardList({
         ) : films !== undefined && films.length === 0 ? (
           <p className="section__error-message">{errorMessage}</p>
         ) : (
-          <></>
+          <p className="section__error-message">{errorMessage}</p>
         )}
       </ul>
     </section>

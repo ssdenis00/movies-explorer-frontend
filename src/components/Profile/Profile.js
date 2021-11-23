@@ -1,10 +1,16 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { useFormWithValidation } from "../Validate/Validate";
 import "./Profile.css";
 
-function Profile({ onExit, onSubmit, errorMessage }) {
+function Profile({
+  onExit,
+  onSubmit,
+  errorMessage,
+  setErrorMessage,
+  inputState,
+}) {
   const userData = useContext(CurrentUserContext);
   const validateForm = useFormWithValidation(
     {
@@ -13,6 +19,10 @@ function Profile({ onExit, onSubmit, errorMessage }) {
     },
     false
   );
+
+  useEffect(() => {
+    setErrorMessage("");
+  }, [setErrorMessage]);
 
   function handleSubmitForm(evt) {
     evt.preventDefault();
@@ -44,6 +54,7 @@ function Profile({ onExit, onSubmit, errorMessage }) {
                 id="name"
                 required
                 onChange={validateForm.handleChange}
+                disabled={inputState ? false : true}
               />
             </li>
             <li className="profile__item">
@@ -58,6 +69,7 @@ function Profile({ onExit, onSubmit, errorMessage }) {
                 value={validateForm.values.email}
                 id="email"
                 onChange={validateForm.handleChange}
+                disabled={inputState ? false : true}
               />
             </li>
           </ul>

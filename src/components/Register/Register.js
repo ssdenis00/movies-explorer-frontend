@@ -1,8 +1,13 @@
+import { useEffect } from "react";
 import Authentication from "../Authentication/Authentication";
 import { useFormWithValidation } from "../Validate/Validate";
 
-function Register({ onRegister, errorMessage }) {
+function Register({ onRegister, errorMessage, setErrorMessage, inputState }) {
   const validateForm = useFormWithValidation({}, true);
+
+  useEffect(() => {
+    setErrorMessage("");
+  }, [setErrorMessage]);
 
   function handleSubmit(evt) {
     evt.preventDefault();
@@ -42,6 +47,7 @@ function Register({ onRegister, errorMessage }) {
         placeholder="Имя"
         value={validateForm.values.name || ""}
         onChange={validateForm.handleChange}
+        disabled={inputState ? false : true}
       />
       <span className="authentication__err">{validateForm.errors.name}</span>
       <label className="authentication__label" htmlFor="register-email">
@@ -56,6 +62,7 @@ function Register({ onRegister, errorMessage }) {
         onChange={validateForm.handleChange}
         value={validateForm.values.email || ""}
         placeholder="Email"
+        disabled={inputState ? false : true}
       />
       <span className="authentication__err">{validateForm.errors.email}</span>
       <label className="authentication__label" htmlFor="register-password">
@@ -70,6 +77,7 @@ function Register({ onRegister, errorMessage }) {
         onChange={validateForm.handleChange}
         value={validateForm.values.password || ""}
         placeholder="Пароль"
+        disabled={inputState ? false : true}
       />
       <span className="authentication__err">
         {validateForm.errors.password}

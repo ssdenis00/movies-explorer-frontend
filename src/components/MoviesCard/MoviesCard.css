@@ -99,7 +99,7 @@
 }
 
 @media (max-width: 425px) {
-  .movie__link {
+  .movie {
     flex-direction: column-reverse;
     align-items: center;
     padding: 0;
