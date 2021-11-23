@@ -1,4 +1,4 @@
-import { Route, Switch, Redirect, useHistory } from "react-router";
+import { Route, Switch, Redirect, useHistory, useLocation } from "react-router";
 import { createRef, useEffect, useState } from "react";
 import "./App.css";
 import Header from "../Header/Header";
@@ -38,20 +38,14 @@ function App() {
   const [savedFilms, setSavedFilms] = useState([]);
   const [savedFilmsSearchResult, setSavedFilmsSearchResult] = useState([]);
 
-  const [path, setPath] = useState([]);
-  const getPath = document.location.pathname;
-
   const history = useHistory();
+  const location = useLocation();
+
+  useEffect(() => {
+    history.push(location.pathname);
+  }, [location.pathname, history]);
 
   const AboutProjectRef = createRef();
-
-  useEffect(() => {
-    history.push(path[0]);
-  }, [history, path]);
-
-  useEffect(() => {
-    setPath((path) => [...path, getPath]);
-  }, [getPath]);
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -267,10 +261,7 @@ function App() {
         const transformedInputValue = inputValue.toLowerCase();
         const transformedFilmName = film.nameRU.toLowerCase();
 
-        return checkboxState
-          ? transformedFilmName.includes(transformedInputValue) &&
-              film.duration <= 40
-          : transformedFilmName.includes(transformedInputValue);
+        return transformedFilmName.includes(transformedInputValue);
       });
 
       if (resultFilms.length === 0) {
@@ -279,6 +270,7 @@ function App() {
 
       setSavedFilmsSearchResult(resultFilms);
     } else {
+      setErrorMessage("");
       setSavedFilmsSearchResult(savedFilms);
     }
   }
@@ -290,6 +282,7 @@ function App() {
       .updateUserData(userData)
       .then((userData) => {
         setUserData(userData);
+        console.log(userData);
       })
       .catch((err) => {
         console.log(err);

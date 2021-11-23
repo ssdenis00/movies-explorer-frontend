@@ -10,10 +10,22 @@ export function useFormWithValidation(initialInputValue, defaultIsValid) {
     const target = evt.target;
     const name = target.name;
     const value = target.value;
+    const regularEmail =
+      /^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/;
 
     setValues({ ...values, [name]: value });
     setErrors({ ...errors, [name]: target.validationMessage });
-    setIsValid(target.closest("form").checkValidity());
+    setIsValid(() => {
+      if (name === "email") {
+        regularEmail.test(value)
+          ? setErrors({ ...errors, email: "" })
+          : setErrors({ ...errors, email: "Некорректный email" });
+
+        return regularEmail.test(value);
+      } else {
+        return target.closest("form").checkValidity();
+      }
+    });
   };
 
   const resetValidForm = useCallback(

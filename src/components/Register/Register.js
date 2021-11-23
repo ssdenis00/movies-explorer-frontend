@@ -74,6 +74,7 @@ function Register({ onRegister, errorMessage, setErrorMessage, inputState }) {
         id="register-password"
         name="password"
         required
+        minLength="8"
         onChange={validateForm.handleChange}
         value={validateForm.values.password || ""}
         placeholder="Пароль"

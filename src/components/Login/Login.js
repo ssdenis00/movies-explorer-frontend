@@ -56,6 +56,7 @@ function Login({ onLogin, errorMessage, setErrorMessage, inputState }) {
         name="password"
         id="login-password"
         required
+        minLength="8"
         placeholder="Пароль"
         onChange={validateForm.handleChange}
         disabled={inputState ? false : true}
