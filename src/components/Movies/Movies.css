@@ -1,6 +1,6 @@
 .more-btn {
   cursor: pointer;
-  display: block;
+  display: none;
   margin: 60px auto 0;
   max-width: 320px;
   width: 100%;
@@ -12,6 +12,10 @@
   font-weight: 500;
   font-size: 12px;
   line-height: 15px;
+}
+
+.more-btn_active {
+  display: block;
 }
 
 @media (max-width: 425px) {

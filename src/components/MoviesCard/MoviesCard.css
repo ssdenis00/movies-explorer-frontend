@@ -1,12 +1,26 @@
 .movie {
   display: flex;
   justify-content: space-between;
+  gap: 10px;
   width: 100%;
   padding: 6px;
   box-sizing: border-box;
   margin: 0;
   background: #2f2f2f;
-  gap: 10px;
+}
+
+.movie_hiden {
+  display: none;
+}
+
+.movie__link {
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.3s ease-in;
+}
+
+.movie__link:hover {
+  opacity: 0.6;
 }
 
 .movie__info {
@@ -46,13 +60,13 @@
   background: center / contain url("../../images/like.svg") no-repeat;
 }
 
+.movie__like-btn_active {
+  background: center / contain url("../../images/liked.svg") no-repeat;
+}
+
 .movie__like-btn_type_saved {
   background: center / contain url("../../images/delete-favorite-icon.svg")
     no-repeat;
-}
-
-.movie__like-btn_active {
-  background: center / contain url("../../images/liked.svg") no-repeat;
 }
 
 .movie__poster {

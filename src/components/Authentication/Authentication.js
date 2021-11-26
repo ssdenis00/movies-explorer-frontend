@@ -10,6 +10,9 @@ function Authentication({
   helperLink,
   helperLinkTo,
   type,
+  handleSubmitForm,
+  isValid,
+  errorMessage,
 }) {
   return (
     <section
@@ -23,11 +26,19 @@ function Authentication({
       </div>
 
       <form
+        onSubmit={handleSubmitForm}
         action="./"
         className="authentication__form authentication__form_type_register"
+        noValidate
       >
         <div className="authentication__inputs">{children}</div>
-        <button type="submit" className="authentication__btn">
+        <span className="authentication__err">{errorMessage}</span>
+        <button
+          type="submit"
+          className={`authentication__btn ${
+            isValid ? "" : "authentication__btn_disabled"
+          }`}
+        >
           {btnName}
         </button>
       </form>

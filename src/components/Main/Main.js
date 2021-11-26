@@ -5,11 +5,11 @@ import Techs from "../Techs/Techs";
 import AboutMe from "../AboutMe/AboutMe";
 import Portfolio from "../Portfolio/Portfolio";
 
-function Main() {
+function Main({ AboutProjectRef, onLearnMore }) {
   return (
     <main className="main">
-      <Promo />
-      <AboutProject />
+      <Promo onLearnMore={onLearnMore} />
+      <AboutProject AboutProjectRef={AboutProjectRef} />
       <Techs />
       <AboutMe />
       <Portfolio />

@@ -1,6 +1,26 @@
+import { useEffect } from "react";
 import Authentication from "../Authentication/Authentication";
+import { useFormWithValidation } from "../Validate/Validate";
 
-function Register() {
+function Register({ onRegister, errorMessage, setErrorMessage, inputState }) {
+  const validateForm = useFormWithValidation({}, true);
+
+  useEffect(() => {
+    setErrorMessage("");
+  }, [setErrorMessage]);
+
+  function handleSubmit(evt) {
+    evt.preventDefault();
+
+    if (validateForm.isValid) {
+      onRegister({
+        name: validateForm.values.name,
+        email: validateForm.values.email,
+        password: validateForm.values.password,
+      });
+    }
+  }
+
   return (
     <Authentication
       title="Добро пожаловать!"
@@ -9,6 +29,9 @@ function Register() {
       helperLink="Войти"
       type="register"
       helperLinkTo="/signin"
+      handleSubmitForm={handleSubmit}
+      isValid={validateForm.isValid}
+      errorMessage={errorMessage}
     >
       <label className="authentication__label" htmlFor="register-name">
         Имя
@@ -19,9 +42,14 @@ function Register() {
         name="name"
         id="register-name"
         required
+        minLength="3"
+        maxLength="24"
         placeholder="Имя"
+        value={validateForm.values.name || ""}
+        onChange={validateForm.handleChange}
+        disabled={inputState ? false : true}
       />
-      <span className="authentication__err"></span>
+      <span className="authentication__err">{validateForm.errors.name}</span>
       <label className="authentication__label" htmlFor="register-email">
         E-mail
       </label>
@@ -31,9 +59,12 @@ function Register() {
         name="email"
         id="register-email"
         required
+        onChange={validateForm.handleChange}
+        value={validateForm.values.email || ""}
         placeholder="Email"
+        disabled={inputState ? false : true}
       />
-      <span className="authentication__err"></span>
+      <span className="authentication__err">{validateForm.errors.email}</span>
       <label className="authentication__label" htmlFor="register-password">
         Пароль
       </label>
@@ -43,9 +74,15 @@ function Register() {
         id="register-password"
         name="password"
         required
+        minLength="8"
+        onChange={validateForm.handleChange}
+        value={validateForm.values.password || ""}
         placeholder="Пароль"
+        disabled={inputState ? false : true}
       />
-      <span className="authentication__err"></span>
+      <span className="authentication__err">
+        {validateForm.errors.password}
+      </span>
     </Authentication>
   );
 }

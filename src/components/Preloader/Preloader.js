@@ -1,8 +1,8 @@
 import "./Preloader.css";
 
-const Preloader = () => {
+const Preloader = ({ state }) => {
   return (
-    <div className="preloader">
+    <div className={`preloader ${state ? "preloader_active" : ""}`}>
       <div className="preloader__container">
         <span className="preloader__round"></span>
       </div>

@@ -1,31 +1,94 @@
+import { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import { useFormWithValidation } from "../Validate/Validate";
 import "./Profile.css";
 
-function Profile({ openModal }) {
+function Profile({
+  onExit,
+  onSubmit,
+  errorMessage,
+  setErrorMessage,
+  inputState,
+}) {
+  const userData = useContext(CurrentUserContext);
+  const validateForm = useFormWithValidation(
+    {
+      name: userData.name,
+      email: userData.email,
+    },
+    false
+  );
+
+  useEffect(() => {
+    setErrorMessage("");
+  }, [setErrorMessage]);
+
+  function handleSubmitForm(evt) {
+    evt.preventDefault();
+
+    if (validateForm.isValid) {
+      onSubmit({
+        name: validateForm.values.name,
+        email: validateForm.values.email,
+      });
+      validateForm.resetValidForm();
+    }
+  }
+
   return (
     <main className="main">
       <section className="profile section">
-        <h1 className="profile__title">Привет, Денис!</h1>
-        <ul className="profile__list">
-          <li className="profile__item">
-            <h2 className="profile__item-title">Имя</h2>
-            <p className="profile__value">Денис</p>
-          </li>
-          <li className="profile__item">
-            <h2 className="profile__item-title">E-mail</h2>
-            <p className="profile__value">pochta@yandex.ru</p>
-          </li>
-        </ul>
+        <h1 className="profile__title">Привет, {userData.name}!</h1>
+        <form action="/" className="profile__form" onSubmit={handleSubmitForm}>
+          <ul className="profile__list">
+            <li className="profile__item">
+              <label htmlFor="name" className="profile__label">
+                Имя
+              </label>
+              <input
+                type="text"
+                className="profile__input"
+                value={validateForm.values.name || ""}
+                name="name"
+                id="name"
+                required
+                onChange={validateForm.handleChange}
+                disabled={inputState ? false : true}
+              />
+            </li>
+            <li className="profile__item">
+              <label htmlFor="email" className="profile__label">
+                E-mail
+              </label>
+              <input
+                type="email"
+                className="profile__input"
+                name="email"
+                required
+                value={validateForm.values.email}
+                id="email"
+                onChange={validateForm.handleChange}
+                disabled={inputState ? false : true}
+              />
+            </li>
+          </ul>
+          <button type="submit" className="profile__submit"></button>
+        </form>
         <div className="profile__links">
+          <span className="profile__err">{errorMessage}</span>
           <button
-            onClick={openModal}
-            type="button"
-            className="profile__link link-hover"
+            type="submit"
+            className={`profile__link link-hover ${
+              validateForm.isValid ? "" : "profile__link_disabled"
+            }`}
+            onClick={handleSubmitForm}
           >
             Редактировать
           </button>
           <Link
             to="/"
+            onClick={onExit}
             className="profile__link profile__link_type_exit link-hover"
           >
             Выйти из аккаунта

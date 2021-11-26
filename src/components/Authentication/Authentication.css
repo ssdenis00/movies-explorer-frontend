@@ -62,20 +62,19 @@
   padding: 10px 0;
 }
 
+.authentication__input:disabled {
+  opacity: 0.5;
+}
+
 .authentication__input_state_error {
   color: #ee3465;
 }
 
 .authentication__err {
-  display: none;
   font-size: 10px;
   line-height: 12px;
   color: #ee3465;
   margin: 7px 0 0;
-}
-
-.authentication__err_active {
-  display: block;
 }
 
 .authentication__btn {
@@ -96,6 +95,15 @@
 
 .authentication__btn:hover {
   opacity: 0.8;
+}
+
+.authentication__btn_disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.authentication__btn_disabled:hover {
+  opacity: 0.3;
 }
 
 .authentication__helper {

@@ -10,7 +10,6 @@
   font-family: "Inter", "Arial", sans-serif;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 }
 
 .app__padding {
@@ -33,6 +32,11 @@
   font-size: 22px;
   line-height: 27px;
   letter-spacing: -0.04em;
+}
+
+.section__error-message {
+  color: #8b8b8b;
+  text-align: center;
 }
 
 .link-hover {
